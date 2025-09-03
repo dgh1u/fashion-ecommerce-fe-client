@@ -13,9 +13,9 @@
         <div
           v-for="(secondMotel, idx) in secondMotelOptions"
           :key="idx"
-          class="flex items-center p-2 rounded-lg cursor-pointer hover:text-teal-500"
+          class="flex items-center p-2 rounded-lg cursor-pointer hover:text-stone-500"
           :class="{
-            'text-teal-500': selectedSecondMotel === secondMotel.value,
+            'text-stone-500': selectedSecondMotel === secondMotel.value,
           }"
           @click="selectSecondMotel(secondMotel.value)"
         >
@@ -29,7 +29,7 @@
             <div
               class="w-5 h-5 border border-gray-300 rounded-full flex items-center justify-center"
               :class="{
-                'bg-teal-500 border-teal-500':
+                'bg-stone-500 border-stone-500':
                   selectedSecondMotel === secondMotel.value,
               }"
             >
@@ -53,8 +53,8 @@
         <div
           v-for="(major, idx) in majorOptions"
           :key="idx"
-          class="flex items-center p-2 rounded-lg cursor-pointer hover:text-teal-500"
-          :class="{ 'text-teal-500': selectedMajor === major.value }"
+          class="flex items-center p-2 rounded-lg cursor-pointer hover:text-stone-500"
+          :class="{ 'text-stone-500': selectedMajor === major.value }"
           @click="selectMajor(major.value)"
         >
           <div class="relative">
@@ -67,7 +67,7 @@
             <div
               class="w-5 h-5 border border-gray-300 rounded-full flex items-center justify-center"
               :class="{
-                'bg-teal-500 border-teal-500': selectedMajor === major.value,
+                'bg-stone-500 border-stone-500': selectedMajor === major.value,
               }"
             >
               <div

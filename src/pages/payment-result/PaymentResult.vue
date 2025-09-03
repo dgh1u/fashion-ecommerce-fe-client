@@ -19,7 +19,7 @@
           <div class="pt-3 text-white">
             <button
               @click="goBack"
-              class="px-6 py-2 bg-teal-400 text-white rounded-lg shadow hover:bg-teal-600 transition duration-200"
+              class="px-6 py-2 bg-stone-400 text-white rounded-lg shadow hover:bg-stone-600 transition duration-200"
             >
               Quay về trang chủ
             </button>

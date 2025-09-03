@@ -79,8 +79,8 @@
     >
       <router-link
         to="/profile"
-        class="flex items-center block py-1.5 md:py-2 px-4 md:px-10 rounded hover:text-teal-500 font-medium text-gray-700 text-xs md:text-sm lg:text-base"
-        active-class="bg-teal-400 text-white"
+        class="flex items-center block py-1.5 md:py-2 px-4 md:px-10 rounded hover:text-stone-500 font-medium text-gray-700 text-xs md:text-sm lg:text-base"
+        active-class="bg-stone-400 text-white"
         exact
       >
         <User class="inline-block w-4 h-4 md:w-5 md:h-5 mr-1.5 md:mr-2" />
@@ -88,32 +88,32 @@
       </router-link>
       <router-link
         to="/create-product"
-        class="flex items-center block py-1.5 md:py-2 px-4 md:px-10 rounded hover:text-teal-500 font-medium text-gray-700 text-xs md:text-sm lg:text-base"
-        active-class="bg-teal-400 text-white"
+        class="flex items-center block py-1.5 md:py-2 px-4 md:px-10 rounded hover:text-stone-500 font-medium text-gray-700 text-xs md:text-sm lg:text-base"
+        active-class="bg-stone-400 text-white"
       >
         <FolderPen class="inline-block w-4 h-4 md:w-5 md:h-5 mr-1.5 md:mr-2" />
         Đăng tin
       </router-link>
       <router-link
         to="/my-products"
-        class="flex items-center block py-1.5 md:py-2 px-4 md:px-10 rounded hover:text-teal-500 font-medium text-gray-700 text-xs md:text-sm lg:text-base"
-        active-class="bg-teal-400 text-white"
+        class="flex items-center block py-1.5 md:py-2 px-4 md:px-10 rounded hover:text-stone-500 font-medium text-gray-700 text-xs md:text-sm lg:text-base"
+        active-class="bg-stone-400 text-white"
       >
         <Folder class="inline-block w-4 h-4 md:w-5 md:h-5 mr-1.5 md:mr-2" />
         Danh sách tin đăng
       </router-link>
       <router-link
         to="/payment"
-        class="flex items-center block py-1.5 md:py-2 px-4 md:px-10 rounded hover:text-teal-500 font-medium text-gray-700 text-xs md:text-sm lg:text-base"
-        active-class="bg-teal-400 text-white"
+        class="flex items-center block py-1.5 md:py-2 px-4 md:px-10 rounded hover:text-stone-500 font-medium text-gray-700 text-xs md:text-sm lg:text-base"
+        active-class="bg-stone-400 text-white"
       >
         <CreditCard class="inline-block w-4 h-4 md:w-5 md:h-5 mr-1.5 md:mr-2" />
         Nạp tiền
       </router-link>
       <router-link
         to="/payment-history"
-        class="flex items-center block py-1.5 md:py-2 px-4 md:px-10 rounded hover:text-teal-500 font-medium text-gray-700 text-xs md:text-sm lg:text-base"
-        active-class="bg-teal-400 text-white"
+        class="flex items-center block py-1.5 md:py-2 px-4 md:px-10 rounded hover:text-stone-500 font-medium text-gray-700 text-xs md:text-sm lg:text-base"
+        active-class="bg-stone-400 text-white"
       >
         <Clock class="inline-block w-4 h-4 md:w-5 md:h-5 mr-1.5 md:mr-2" />
         Lịch sử nạp tiền

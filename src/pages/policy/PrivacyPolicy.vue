@@ -3,14 +3,16 @@
     <div className="min-h-screen text-gray-800">
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center text-gray-500 text-sm">
-          <a href="/home" className="hover:text-green-900 text-teal-800">Nhà</a>
+          <a href="/home" className="hover:text-green-900 text-stone-800"
+            >Nhà</a
+          >
           <span className="mx-2">&gt;</span>
           <span className="text-gray-700">Chính sách bảo mật</span>
         </div>
       </div>
 
       <div className="container mx-auto px-4 pt-4">
-        <h1 className="text-4xl font-semibold text-teal-700">
+        <h1 className="text-4xl font-semibold text-stone-700">
           Chính sách bảo mật
         </h1>
       </div>

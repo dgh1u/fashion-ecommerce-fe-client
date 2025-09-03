@@ -11,52 +11,111 @@
         ref="priceRangeRef"
         v-model="priceRangeLocal"
         :min="0"
-        :max="30"
+        :max="100"
         :step="1"
         :tooltip="true"
       />
     </div>
 
-    <!-- Bộ lọc đặc điểm - Chọn nhiều -->
+    <!-- Bộ lọc giới tính -->
     <div class="mb-4">
       <div class="p-3 text-left">
-        <span class="font-bold text-base mb-2">Đặc điểm</span>
+        <span class="font-bold text-base mb-2">Giới tính</span>
       </div>
       <div class="grid grid-cols-2">
         <div
-          v-for="(feature, idx) in featureOptions"
-          :key="idx"
           class="flex items-center p-2 rounded-lg cursor-pointer hover:text-stone-500"
-          :class="{ 'text-stone-500': isFeatureSelected(feature.value) }"
-          @click="toggleFeature(feature.value)"
+          :class="{ 'text-stone-500': isGenderSelected(true) }"
+          @click="toggleGender(true)"
         >
           <div class="relative">
             <input
               type="checkbox"
               class="hidden"
-              :checked="isFeatureSelected(feature.value)"
+              :checked="isGenderSelected(true)"
               readonly
             />
             <div
               class="w-5 h-5 border border-gray-300 rounded flex items-center justify-center"
               :class="{
-                'bg-stone-500 border-stone-500 ': isFeatureSelected(
-                  feature.value
-                ),
+                'bg-stone-500 border-stone-500 ': isGenderSelected(true),
               }"
             >
               <CheckIcon
-                v-if="isFeatureSelected(feature.value)"
+                v-if="isGenderSelected(true)"
                 class="w-3 h-3 text-white"
               />
             </div>
           </div>
-          <span class="ml-2 text-xs font-medium">{{ feature.label }}</span>
+          <span class="ml-2 text-xs font-medium">Nam</span>
+        </div>
+        <div
+          class="flex items-center p-2 rounded-lg cursor-pointer hover:text-stone-500"
+          :class="{ 'text-stone-500': isGenderSelected(false) }"
+          @click="toggleGender(false)"
+        >
+          <div class="relative">
+            <input
+              type="checkbox"
+              class="hidden"
+              :checked="isGenderSelected(false)"
+              readonly
+            />
+            <div
+              class="w-5 h-5 border border-gray-300 rounded flex items-center justify-center"
+              :class="{
+                'bg-stone-500 border-stone-500 ': isGenderSelected(false),
+              }"
+            >
+              <CheckIcon
+                v-if="isGenderSelected(false)"
+                class="w-3 h-3 text-white"
+              />
+            </div>
+          </div>
+          <span class="ml-2 text-xs font-medium">Nữ</span>
         </div>
       </div>
     </div>
 
-    <!-- Add new color filter section -->
+    <!-- Bộ lọc size - Chọn nhiều -->
+    <div class="mb-4">
+      <div class="p-3 text-left">
+        <span class="font-bold text-base mb-2">Size</span>
+      </div>
+      <div class="grid grid-cols-2">
+        <div
+          v-for="(size, idx) in sizeOptions"
+          :key="idx"
+          class="flex items-center p-2 rounded-lg cursor-pointer hover:text-stone-500"
+          :class="{ 'text-stone-500': isSizeSelected(size.value) }"
+          @click="toggleSize(size.value)"
+        >
+          <div class="relative">
+            <input
+              type="checkbox"
+              class="hidden"
+              :checked="isSizeSelected(size.value)"
+              readonly
+            />
+            <div
+              class="w-5 h-5 border border-gray-300 rounded flex items-center justify-center"
+              :class="{
+                'bg-stone-500 border-stone-500 ': isSizeSelected(size.value),
+              }"
+            >
+              <CheckIcon
+                v-if="isSizeSelected(size.value)"
+                class="w-3 h-3 text-white"
+              />
+            </div>
+          </div>
+          <span class="ml-2 text-xs font-medium">{{ size.label }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Color filter section -->
     <div class="mb-4">
       <div class="p-3 text-left">
         <span class="font-bold text-base mb-2">Màu sắc</span>
@@ -66,66 +125,75 @@
           v-for="(color, idx) in colorOptions"
           :key="idx"
           class="flex flex-col items-center gap-1 cursor-pointer"
-          @click="toggleFeature(color.value)"
+          @click="toggleColor(color.value)"
         >
           <div class="relative">
+            <!-- Conditional rendering based on selection -->
             <div
-              class="w-8 h-8 rounded-full border border-black flex items-center justify-center"
-              :style="{ backgroundColor: color.color }"
+              v-if="isColorSelected(color.value)"
+              class="w-12 h-12 rounded-full border-2 border-black bg-white flex items-center justify-center p-0.5"
             >
-              <CheckIcon
-                v-if="isFeatureSelected(color.value)"
-                class="w-4 h-4"
-                :class="
-                  color.color === '#FFFFFF' ||
-                  color.color === '#FFFFF0' ||
-                  color.color === '#F5F5DC'
-                    ? 'text-gray-800'
-                    : 'text-white'
-                "
-              />
+              <!-- Inner colored circle when selected -->
+              <div
+                class="w-10 h-10 rounded-full flex items-center justify-center"
+                :style="{ backgroundColor: color.color }"
+              >
+                <CheckIcon
+                  class="w-4 h-4"
+                  :class="
+                    color.color === '#FFFFFF' ||
+                    color.color === '#FFFFF0' ||
+                    color.color === '#F5F5DC'
+                      ? 'text-gray-800'
+                      : 'text-white'
+                  "
+                />
+              </div>
             </div>
+
+            <!-- Simple colored circle when not selected using Color component -->
+            <Color v-else :color="color.color" />
           </div>
           <span class="text-xs text-center font-medium">{{ color.label }}</span>
         </div>
       </div>
     </div>
 
-    <!-- Bộ lọc đặc điểm - Chọn nhiều -->
+    <!-- Bộ lọc chất liệu - Chọn nhiều -->
     <div class="mb-4">
       <div class="p-3 text-left">
         <span class="font-bold text-base mb-2">Chất liệu</span>
       </div>
       <div class="grid grid-cols-2">
         <div
-          v-for="(feature, idx) in feature2Options"
+          v-for="(material, idx) in materialOptions"
           :key="idx"
           class="flex items-center p-2 rounded-lg cursor-pointer hover:text-stone-500"
-          :class="{ 'text-stone-500': isFeatureSelected(feature.value) }"
-          @click="toggleFeature(feature.value)"
+          :class="{ 'text-stone-500': isMaterialSelected(material.value) }"
+          @click="toggleMaterial(material.value)"
         >
           <div class="relative">
             <input
               type="checkbox"
               class="hidden"
-              :checked="isFeatureSelected(feature.value)"
+              :checked="isMaterialSelected(material.value)"
               readonly
             />
             <div
               class="w-5 h-5 border border-gray-300 rounded flex items-center justify-center"
               :class="{
-                'bg-stone-500 border-stone-500 ': isFeatureSelected(
-                  feature.value
+                'bg-stone-500 border-stone-500 ': isMaterialSelected(
+                  material.value
                 ),
               }"
             >
               <CheckIcon
-                v-if="isFeatureSelected(feature.value)"
+                v-if="isMaterialSelected(material.value)"
                 class="w-3 h-3 text-white"
               />
             </div>
           </div>
-          <span class="ml-2 text-xs font-medium">{{ feature.label }}</span>
+          <span class="ml-2 text-xs font-medium">{{ material.label }}</span>
         </div>
       </div>
     </div>
@@ -146,6 +214,7 @@
 <script setup>
 import { ref, watch, defineEmits } from "vue";
 import PriceRange from "@/components/range-slider/PriceRange.vue";
+import Color, { colorSets } from "@/components/color/Color.vue";
 
 import {
   Filter as FilterIcon,
@@ -162,8 +231,9 @@ const priceRangeRef = ref(null);
 const acreageRangeRef = ref(null);
 
 // Giá trị mặc định cho các bộ lọc
-const priceRangeLocal = ref([0, 30]);
+const priceRangeLocal = ref([0, 100]);
 const acreageRangeLocal = ref([5, 95]);
+const selectedGenders = ref([]); // Thay đổi thành mảng để lưu nhiều giá trị
 
 // Danh sách các khu vực
 const districtOptions = [
@@ -176,44 +246,46 @@ const districtOptions = [
   { label: "Khu vực khác", value: "Khác" },
 ];
 
-// Danh sách các đặc điểm
-const featureOptions = [
-  { label: "S", value: "full_furniture" },
-  { label: "M", value: "has_kitchen" },
-  { label: "L", value: "has_aircon" },
-  { label: "XL", value: "has_washer" },
-  { label: "2XL", value: "has_internet" },
-  { label: "3XL", value: "no_toilet" },
-  { label: "4XL", value: "no_owner" },
+// Danh sách các size
+const sizeOptions = [
+  { label: "S", value: "S" },
+  { label: "M", value: "M" },
+  { label: "L", value: "L" },
+  { label: "XL", value: "XL" },
+  { label: "2XL", value: "2XL" },
+  { label: "3XL", value: "3XL" },
+  { label: "4XL", value: "4XL" },
 ];
 
-// Danh sách các đặc điểm
-const feature2Options = [
-  { label: "Cotton", value: "full_furniture" },
-  { label: "Polyester", value: "has_kitchen" },
-  { label: "Nylon", value: "has_aircon" },
-  { label: "Wool", value: "has_washer" },
-  { label: "Spandex", value: "has_internet" },
-  { label: "Modal", value: "no_toilet" },
-  { label: "Kapok", value: "no_owner" },
+// Danh sách các chất liệu
+const materialOptions = [
+  { label: "Cotton", value: "Cotton" },
+  { label: "Polyester", value: "Polyester" },
+  { label: "Nylon", value: "Nylon" },
+  { label: "Wool", value: "Wool" },
+  { label: "Spandex", value: "Spandex" },
+  { label: "Modal", value: "Modal" },
+  { label: "Kapok", value: "Kapok" },
 ];
 
-// Danh sách màu sắc
+// Danh sách màu sắc - mapping đúng với dữ liệu backend
 const colorOptions = [
-  { label: "Đỏ", value: "red", color: "#FF0000" },
-  { label: "Xanh lá", value: "green", color: "#00FF00" },
-  { label: "Xanh dương", value: "blue", color: "#0000FF" },
-  { label: "Vàng", value: "yellow", color: "#FFFF00" },
-  { label: "Đen", value: "black", color: "#000000" },
-  { label: "Trắng", value: "white", color: "#FFFFFF" },
-  { label: "Cam", value: "orange", color: "#FFA500" },
-  { label: "Tím", value: "purple", color: "#800080" },
+  { label: "Be", value: "Be", color: "#F5F5DC" }, // Từ API response
+  { label: "Đỏ", value: "Đỏ", color: "#FF0000" },
+  { label: "Xanh", value: "Xanh", color: "#0000FF" },
+  { label: "Vàng", value: "Vàng", color: "#FFFF00" },
+  { label: "Đen", value: "Đen", color: "#000000" },
+  { label: "Trắng", value: "Trắng", color: "#FFFFFF" },
+  { label: "Hồng", value: "Hồng", color: "#FFC0CB" },
+  { label: "Xám", value: "Xám", color: "#808080" },
 ];
 
 // Khu vực - chỉ chọn một giá trị duy nhất
 const selectedDistrict = ref(null);
-// Đặc điểm - cho phép chọn nhiều giá trị
-const selectedFeatures = ref([]);
+// Các filter riêng biệt cho từng loại
+const selectedSizes = ref([]); // Sizes được chọn
+const selectedMaterials = ref([]); // Materials được chọn
+const selectedColors = ref([]); // Colors được chọn
 
 // Xử lý chọn khu vực
 function selectDistrict(value) {
@@ -227,31 +299,80 @@ function selectDistrict(value) {
   updateFilters();
 }
 
-// Xử lý chọn đặc điểm
-function toggleFeature(value) {
-  const index = selectedFeatures.value.indexOf(value);
+// Xử lý chọn giới tính
+function toggleGender(value) {
+  const index = selectedGenders.value.indexOf(value);
   if (index === -1) {
-    // Thêm nếu chưa có trong danh sách
-    selectedFeatures.value.push(value);
+    selectedGenders.value.push(value);
   } else {
-    // Xóa nếu đã có trong danh sách
-    selectedFeatures.value.splice(index, 1);
+    selectedGenders.value.splice(index, 1);
   }
   updateFilters();
 }
 
-// Kiểm tra đặc điểm đã được chọn chưa
-function isFeatureSelected(value) {
-  return selectedFeatures.value.includes(value);
+// Kiểm tra giới tính đã được chọn chưa
+function isGenderSelected(value) {
+  return selectedGenders.value.includes(value);
+}
+
+// Xử lý chọn size
+function toggleSize(value) {
+  const index = selectedSizes.value.indexOf(value);
+  if (index === -1) {
+    selectedSizes.value.push(value);
+  } else {
+    selectedSizes.value.splice(index, 1);
+  }
+  updateFilters();
+}
+
+// Xử lý chọn material
+function toggleMaterial(value) {
+  const index = selectedMaterials.value.indexOf(value);
+  if (index === -1) {
+    selectedMaterials.value.push(value);
+  } else {
+    selectedMaterials.value.splice(index, 1);
+  }
+  updateFilters();
+}
+
+// Xử lý chọn color
+function toggleColor(value) {
+  const index = selectedColors.value.indexOf(value);
+  if (index === -1) {
+    selectedColors.value.push(value);
+  } else {
+    selectedColors.value.splice(index, 1);
+  }
+  updateFilters();
+}
+
+// Kiểm tra size đã được chọn chưa
+function isSizeSelected(value) {
+  return selectedSizes.value.includes(value);
+}
+
+// Kiểm tra material đã được chọn chưa
+function isMaterialSelected(value) {
+  return selectedMaterials.value.includes(value);
+}
+
+// Kiểm tra color đã được chọn chưa
+function isColorSelected(value) {
+  return selectedColors.value.includes(value);
 }
 
 // Đặt lại toàn bộ bộ lọc về giá trị mặc định
 function resetAll() {
   // Đặt lại giá trị các bộ lọc
-  priceRangeLocal.value = [0, 30];
+  priceRangeLocal.value = [0, 100];
   acreageRangeLocal.value = [0, 100];
   selectedDistrict.value = null;
-  selectedFeatures.value = [];
+  selectedSizes.value = [];
+  selectedMaterials.value = [];
+  selectedColors.value = [];
+  selectedGenders.value = []; // Đặt lại giới tính
 
   // Đặt lại lựa chọn nhanh trong component PriceRange
   if (priceRangeRef.value) {
@@ -275,11 +396,27 @@ function resetAll() {
 
 // Cập nhật và gửi thông tin bộ lọc đến component cha
 function updateFilters() {
+  // Xử lý logic giới tính
+  let genderValue = null;
+  if (selectedGenders.value.length === 1) {
+    // Chỉ chọn 1 giới tính
+    genderValue = selectedGenders.value[0];
+  } else if (
+    selectedGenders.value.length === 0 ||
+    selectedGenders.value.length === 2
+  ) {
+    // Không chọn gì hoặc chọn cả 2 -> lấy tất cả
+    genderValue = null;
+  }
+
   emit("update:filters", {
     priceRange: priceRangeLocal.value,
     acreageRange: acreageRangeLocal.value,
     districtSelected: selectedDistrict.value,
-    featuresSelected: selectedFeatures.value,
+    sizesSelected: selectedSizes.value, // Filter theo sizes
+    materialsSelected: selectedMaterials.value, // Filter theo materials
+    colorsSelected: selectedColors.value, // Filter theo colors
+    gender: genderValue, // Filter theo giới tính
   });
 }
 

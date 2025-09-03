@@ -1,5 +1,7 @@
 <template>
   <div class="flex flex-col min-h-screen">
+    <!-- Secondary Header -->
+    <SecondaryHeader />
     <!-- Header -->
     <Header class="bg-gray-300 p-2" />
 
@@ -41,8 +43,6 @@
       </main>
     </div>
 
-
-
     <!-- Footer -->
     <Footer class="bg-gray-300 p-4" />
   </div>
@@ -51,6 +51,7 @@
 <script setup>
 import { ref } from "vue";
 import Header from "../components/header/Header.vue";
+import SecondaryHeader from "../components/header/SecondaryHeader.vue";
 import Footer from "../components/footer/Footer.vue";
 import ProfileSidebar from "../components/sidebar-profile/ProfileSidebar.vue";
 

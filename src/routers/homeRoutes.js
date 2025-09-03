@@ -3,14 +3,20 @@ import Home from "../pages/home/Home.vue";
 import NotFound from "../pages/not-found/NotFound.vue";
 import Contact from "../pages/contact/Contact.vue";
 
-
-
 import PaymentResult from "../pages/payment-result/PaymentResult.vue";
 import PrivacyPolicy from "../pages/policy/PrivacyPolicy.vue";
 
-import DocumentList from "../pages/document/DocumentList.vue";
+import ClothingList from "../pages/product/clothing/ClothingList.vue";
+import ClothingDetail from "../pages/product/clothing/ClothingDetail.vue";
 
-import DocumentDetail from "../pages/document/DocumentDetail.vue";
+import BagsDetail from "../pages/product/bags/BagsDetail.vue";
+import BagsList from "../pages/product/bags/BagsList.vue";
+
+import ShoesList from "../pages/product/shoes/ShoesList.vue";
+import ShoesDetail from "../pages/product/shoes/ShoesDetail.vue";
+
+import AccessoriesDetail from "../pages/product/accessories/AccessoriesDetail.vue";
+import AccessoriesList from "../pages/product/accessories/AccessoriesList.vue";
 
 export default [
   {
@@ -47,27 +53,76 @@ export default [
   },
 
   {
-    path: "/product/document",
-    name: "DocumentList",
-    component: DocumentList,
+    path: "/product/clothing",
+    name: "ClothingList",
+    component: ClothingList,
     meta: {
       requiresAuth: false,
     },
   },
 
   {
-    path: "/product/document/:id",
-    name: "DocumentDetail",
-    component: DocumentDetail,
+    path: "/product/clothing/:id",
+    name: "ClothingDetail",
+    component: ClothingDetail,
     meta: {
       requiresAuth: false,
     },
   },
 
+  {
+    path: "/product/bags",
+    name: "BagsList",
+    component: BagsList,
+    meta: {
+      requiresAuth: false,
+    },
+  },
 
+  {
+    path: "/product/bags/:id",
+    name: "BagsDetail",
+    component: BagsDetail,
+    meta: {
+      requiresAuth: false,
+    },
+  },
 
+  {
+    path: "/product/shoes",
+    name: "ShoesList",
+    component: ShoesList,
+    meta: {
+      requiresAuth: false,
+    },
+  },
 
+  {
+    path: "/product/shoes/:id",
+    name: "ShoesDetail",
+    component: ShoesDetail,
+    meta: {
+      requiresAuth: false,
+    },
+  },
 
+  {
+    path: "/product/accessories",
+    name: "AccessoriesList",
+    component: AccessoriesList,
+    meta: {
+      requiresAuth: false,
+    },
+  },
+
+  {
+    path: "/product/accessories/:id",
+    name: "AccessoriesDetail",
+    component: AccessoriesDetail,
+    meta: {
+      requiresAuth: false,
+    },
+  },
 
   {
     path: "/payment/:id/result",

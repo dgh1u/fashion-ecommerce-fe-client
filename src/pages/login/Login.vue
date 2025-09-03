@@ -118,7 +118,7 @@
 
     <!-- Cột phải: Nền VNUA với thông tin trường -->
     <div
-      class="hidden xl:flex w-1/2 bg-gradient-to-br from-teal-400 to-sky-300 items-center justify-center"
+      class="hidden xl:flex w-1/2 bg-gradient-to-br from-stone-400 to-sky-300 items-center justify-center"
     >
       <div class="text-center text-white px-8">
         <!-- Tên trường -->

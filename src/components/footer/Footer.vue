@@ -3,30 +3,22 @@
     <div class="container mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-14 gap-4">
         <!-- Thông tin công ty (chiếm 5 cột) -->
-        <div
-          class="md:col-span-5 pl-4"
-          
-        >
+        <div class="md:col-span-5 pl-4">
           <div class="flex flex-col mb-4">
-            <img
-              src="@/assets/vnua-sv-logo.jpg"
-              width="100"
-              alt="Logo"
-              class="mb-3"
-            />
-            <span class="flex text-lg text-black font-semibold">
-              Kênh thông tin Dịch vụ VNUA SERVICES
-            </span>
+            <!-- SAU: Logo text từ Logo.vue -->
+            <div class="logo-text-footer mb-3">
+              <div class="tuan-footer">TUAN</div>
+              <div class="fashion-footer">Fashion</div>
+            </div>
           </div>
           <p class="text-black text-base leading-relaxed mb-4">
-            VNUA Services là Website kênh thông tin cung cấp tất cả các thông
-            tin về Dịch vụ xung quanh khu vực Học viện Nông Nghiệp Việt Nam
-            (VNUA).
+            TUAN Fashion là Website thương mại điện tử chuyên về thời trang.
+            Chuyên cung cấp các sản phẩm về quần áo, giày dép, phụ kiện.
           </p>
         </div>
 
         <!-- Chính sách bảo mật -->
-        <div class="md:col-span-2" >
+        <div class="md:col-span-2">
           <h6 class="text-lg text-black font-semibold mb-4">
             Chính sách bảo mật
           </h6>
@@ -83,7 +75,7 @@
         </div>
 
         <!-- Các tính năng của website -->
-        <div class="md:col-span-2" >
+        <div class="md:col-span-2">
           <h6 class="text-lg text-black font-semibold mb-4">Tính năng</h6>
           <ul class="space-y-2 text-base text-black">
             <li>
@@ -99,7 +91,7 @@
                 href="/create-product"
                 class="hover:text-blue-400 transition-colors duration-200"
               >
-                Đăng tin
+                Giỏ hàng
               </a>
             </li>
             <li>
@@ -107,70 +99,53 @@
                 href="/payment"
                 class="hover:text-blue-400 transition-colors duration-200"
               >
-                Nạp tiền
-              </a>
-            </li>
-            <li>
-              <a
-                href="/list-notifications"
-                class="hover:text-blue-400 transition-colors duration-200"
-              >
-                Thông báo
+                Lịch sử mua hàng
               </a>
             </li>
           </ul>
         </div>
 
         <!-- Các đường dẫn nhanh -->
-        <div class="md:col-span-2" 
-        >
+        <div class="md:col-span-2">
           <h6 class="text-lg text-black font-semibold mb-4">Link nhanh</h6>
           <ul class="space-y-2 text-base text-black">
             <li>
               <a
-                href="/product/motel"
+                href="/product/clothing"
                 class="hover:text-blue-400 transition-colors duration-200"
               >
-                Tìm nhà trọ
+                Quần áo
               </a>
             </li>
             <li>
               <a
-                href="/product/roommate"
+                href="/product/bags"
                 class="hover:text-blue-400 transition-colors duration-200"
               >
-                Tìm người ở ghép
+                Túi xách
               </a>
             </li>
             <li>
               <a
-                href="/create-product"
+                href="/product/shoes"
                 class="hover:text-blue-400 transition-colors duration-200"
               >
-                Cửa hàng
+                Giày dép
               </a>
             </li>
             <li>
               <a
-                href="/payment"
+                href="/product/accessories"
                 class="hover:text-blue-400 transition-colors duration-200"
               >
-                Giao hàng
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="hover:text-blue-400 transition-colors duration-200"
-              >
-                Liên hệ
+                Phụ kiện
               </a>
             </li>
           </ul>
         </div>
 
         <!-- Thông tin liên hệ -->
-        <div class="md:col-span-3" >
+        <div class="md:col-span-3">
           <h6 class="text-lg text-black font-semibold mb-4">Liên Hệ</h6>
           <ul class="space-y-3 text-base text-black">
             <li class="flex items-center">
@@ -179,16 +154,16 @@
                 href="tel:0981266403"
                 class="hover:text-blue-400 transition-colors duration-200"
               >
-                +849 8126 6403
+                +849 1234 5678
               </a>
             </li>
             <li class="flex items-center">
               <Mail class="w-5 h-5 mr-3 text-blue-400" />
               <a
-                href="mailto:hieutkhd03@gmail.com"
+                href="mailto:vantuan@gmail.com"
                 class="hover:text-blue-400 transition-colors duration-200"
               >
-                hieutkhd03@gmail.com
+                vantuan@gmail.com
               </a>
             </li>
             <li class="flex items-center">
@@ -233,3 +208,26 @@
 // Import các biểu tượng từ thư viện lucide-vue-next
 import { Facebook, MessageSquare, Mail, Phone, MapPin } from "lucide-vue-next";
 </script>
+
+<style scoped>
+.logo-text-footer {
+  font-family: "Open Sans", sans-serif;
+  line-height: 1;
+  text-align: left;
+  width: 100px;
+}
+
+.tuan-footer {
+  font-size: 2.2em;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #000000; /* Chữ đen */
+}
+
+.fashion-footer {
+  font-size: 1.6em;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #000000; /* Chữ đen */
+}
+</style>

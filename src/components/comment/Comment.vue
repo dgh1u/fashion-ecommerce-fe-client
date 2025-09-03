@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-lg p-6  mt-4">
+  <div class="bg-white rounded-lg p-6 mt-4">
     <div class="pb-6">
       <span class="text-xl font-bold">Bình luận</span>
     </div>
@@ -14,7 +14,7 @@
         <textarea
           v-model="newComment"
           rows="2"
-          class="w-full bg-gray-100 rounded-3xl px-6 py-4 pr-12 focus:ring-2 focus:ring-teal-300 resize-none"
+          class="w-full bg-gray-100 rounded-3xl px-6 py-4 pr-12 focus:ring-2 focus:ring-stone-300 resize-none"
           placeholder="Viết bình luận..."
         />
 
@@ -102,7 +102,7 @@
             <textarea
               v-model="editingComment.content"
               rows="2"
-              class="w-full bg-gray-100 rounded-3xl px-6 py-4 pr-12 focus:ring-2 focus:ring-teal-300 resize-none"
+              class="w-full bg-gray-100 rounded-3xl px-6 py-4 pr-12 focus:ring-2 focus:ring-stone-300 resize-none"
             />
             <button
               @click="cancelEditing"
@@ -243,12 +243,12 @@ async function handleAddComment() {
   }
 
   try {
-    const commentData = { 
-      content: newComment.value, 
-      idProduct: props.productId, 
-      rate: 0 
+    const commentData = {
+      content: newComment.value,
+      idProduct: props.productId,
+      rate: 0,
     };
-    
+
     await createComment(commentData, authStore.token);
     message.success("Bình luận đã được đăng");
     newComment.value = "";

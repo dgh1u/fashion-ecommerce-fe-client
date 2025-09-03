@@ -32,17 +32,19 @@
           {{ formatPrice(product.criteriaDTO?.price) }}
         </span>
 
-        <!-- Discount percentage badge -->
-        <span
-          class="bg-blue-500 text-white px-2 py-1 rounded text-xs font-medium"
-        >
-          -{{ discountPercentage }}%
-        </span>
+        <!-- Discount percentage badge and original price - only show if there's a valid discount -->
+        <template v-if="hasValidDiscount">
+          <span
+            class="bg-red-500 text-white px-2 py-1 rounded text-xs font-medium"
+          >
+            -{{ discountPercentage }}%
+          </span>
 
-        <!-- Original price with strikethrough -->
-        <span class="text-sm text-gray-400 line-through">
-          {{ formatPrice(product.criteriaDTO?.originalPrice) }}
-        </span>
+          <!-- Original price with strikethrough -->
+          <span class="text-sm text-gray-400 line-through">
+            {{ formatPrice(product.criteriaDTO?.originalPrice) }}
+          </span>
+        </template>
       </div>
     </div>
   </div>
@@ -87,16 +89,25 @@ const thumbnailImage = computed(() => {
   return fetchedImages.value.length > 0 ? fetchedImages.value[0] : placeholder;
 });
 
-// Calculate discount percentage
+// Calculate discount percentage - simplified and accurate
 const discountPercentage = computed(() => {
   const originalPrice =
-    parseFloat(props.product.criteriaDTO?.electricPrice) || 0;
+    parseFloat(props.product.criteriaDTO?.originalPrice) || 0;
   const currentPrice = parseFloat(props.product.criteriaDTO?.price) || 0;
 
   if (originalPrice > 0 && currentPrice > 0 && originalPrice > currentPrice) {
     return Math.round(((originalPrice - currentPrice) / originalPrice) * 100);
   }
-  return 10; // Default discount percentage
+  return 0;
+});
+
+// Check if there's a valid discount to display
+const hasValidDiscount = computed(() => {
+  const originalPrice =
+    parseFloat(props.product.criteriaDTO?.originalPrice) || 0;
+  const currentPrice = parseFloat(props.product.criteriaDTO?.price) || 0;
+
+  return originalPrice > 0 && currentPrice > 0 && originalPrice > currentPrice;
 });
 
 // Format price with thousand separators
@@ -117,6 +128,7 @@ function onImgError(event) {
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   word-break: break-word;

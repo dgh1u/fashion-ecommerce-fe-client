@@ -7,7 +7,7 @@
         : 'relative',
     ]"
   >
-    <div class="mx-auto px-3 sm:px-4 md:px-6 lg:px-30">
+    <div class="mx-auto px-3 sm:px-4 md:px-6 lg:px-30 py-2">
       <!-- Grid layout cho Desktop -->
       <div class="hidden md:grid grid-cols-12 items-center">
         <!-- Logo ở cột 1-2 -->
@@ -17,53 +17,29 @@
             exact-active-class="text-white-500 font-bold"
             class="block"
           >
-            <LogoText 
-              data-aos="zoom-out"
-              data-aos-duration="800"
-            />
+            <LogoText data-aos="zoom-out" data-aos-duration="800" />
           </router-link>
         </div>
 
         <!-- Navigation ở cột 3-8 -->
-        <div class="col-span-6 flex items-center ml-6 space-x-6 lg:space-x-12">
-          <div
-            class="relative"
-            @mouseenter="showRoomMenu"
-            @mouseleave="hideRoomMenu"
-          >
-            <span
-              class="flex items-center text-white hover:text-teal-500 transition duration-150 cursor-pointer text-sm lg:text-base"
-              data-aos="zoom-out"
-              data-aos-duration="800"
-            >
-              Quần áo <ChevronDown size="18" class="ml-1" />
-            </span>
-            <div
-              v-show="showRoomDropdown"
-              class="absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-lg transition-opacity duration-200"
-              style="z-index: 9999"
-            >
-              <router-link
-                to="/product/motel"
-                class="block px-4 py-2 pt-4 font-medium text-gray-700 hover:text-teal-500 transition duration-150 text-sm lg:text-base"
-              >
-                Nam
-              </router-link>
-              <router-link
-                to="/product/roommate"
-                class="block px-4 py-2 pb-4 text-gray-700 hover:text-teal-500 transition duration-150 text-sm lg:text-base"
-              >
-                Nữ
-              </router-link>
-            </div>
-          </div>
-
-        <router-link
+        <div
+          class="col-span-6 flex items-center ml-6 space-x-6 lg:space-x-12 text-lg font-semibold"
+        >
+          <router-link
             data-aos="zoom-out"
             data-aos-duration="800"
-            to="/product/document"
-            exact-active-class="text-blue-500"
-            class="hover:text-teal-500 transition duration-150 text-sm lg:text-base"
+            to="/product/clothing"
+            exact-active-class="border-b-2 border-white "
+            class="py-0.5 nav-link-hover transition duration-150"
+          >
+            Quần áo
+          </router-link>
+          <router-link
+            data-aos="zoom-out"
+            data-aos-duration="800"
+            to="/product/bags"
+            exact-active-class="border-b-2 border-white"
+            class="py-0.5 nav-link-hover transition duration-150"
           >
             Túi xách
           </router-link>
@@ -71,9 +47,9 @@
           <router-link
             data-aos="zoom-out"
             data-aos-duration="800"
-            to="/product/document"
-            exact-active-class="text-blue-500"
-            class="hover:text-teal-500 transition duration-150 text-sm lg:text-base"
+            to="/product/shoes"
+            exact-active-class="border-b-2 border-white"
+            class="py-0.5 nav-link-hover transition duration-150"
           >
             Giày dép
           </router-link>
@@ -81,9 +57,9 @@
           <router-link
             data-aos="zoom-out"
             data-aos-duration="800"
-            to="/contact"
-            exact-active-class="text-blue-500"
-            class="hover:text-teal-500 transition duration-150 text-sm lg:text-base"
+            to="/product/accessories"
+            exact-active-class="border-b-2 border-white"
+            class="py-0.5 nav-link-hover transition duration-150"
           >
             Phụ kiện
           </router-link>
@@ -92,10 +68,6 @@
         <!-- Phần đăng nhập / dropdown user bên phải -->
         <div class="col-span-4 flex justify-end">
           <div v-if="authStore.isAuthenticated" class="flex items-center">
-         
-
-         
-
             <!-- Dropdown thông tin người dùng -->
             <DropdownMenu />
           </div>
@@ -133,16 +105,13 @@
           exact-active-class="text-blue-500"
           class="transition duration-150 z-20"
         >
-          <LogoText 
-            data-aos="zoom-out"
-            data-aos-duration="800"
-          />
+          <LogoText data-aos="zoom-out" data-aos-duration="800" />
         </router-link>
 
         <!-- Mobile menu button -->
         <button
           @click="toggleMobileMenu"
-          class="z-20 text-white hover:text-teal-500 focus:outline-none"
+          class="z-20 text-white hover:text-stone-500 focus:outline-none"
           aria-label="Toggle mobile menu"
         >
           <Menu v-if="!mobileMenuOpen" size="24" />
@@ -200,14 +169,14 @@
               <router-link
                 to="/product/motel"
                 @click="closeMobileMenu"
-                class="block py-2 text-white hover:text-teal-500 text-base"
+                class="block py-2 text-white hover:text-stone-500 text-base"
               >
                 Tìm phòng trọ
               </router-link>
               <router-link
                 to="/product/roommate"
                 @click="closeMobileMenu"
-                class="block py-2 text-white hover:text-teal-500 text-base"
+                class="block py-2 text-white hover:text-stone-500 text-base"
               >
                 Tìm người ở ghép
               </router-link>
@@ -234,14 +203,14 @@
               <router-link
                 to="/product/restaurant"
                 @click="closeMobileMenu"
-                class="block py-2 text-white hover:text-teal-500 text-base"
+                class="block py-2 text-white hover:text-stone-500 text-base"
               >
                 Quán ăn
               </router-link>
               <router-link
                 to="/product/beverage"
                 @click="closeMobileMenu"
-                class="block py-2 text-white hover:text-teal-500 text-base"
+                class="block py-2 text-white hover:text-stone-500 text-base"
               >
                 Quán nước
               </router-link>
@@ -268,14 +237,14 @@
               <router-link
                 to="/product/store"
                 @click="closeMobileMenu"
-                class="block py-2 text-white hover:text-teal-500 text-base"
+                class="block py-2 text-white hover:text-stone-500 text-base"
               >
                 Cửa hàng
               </router-link>
               <router-link
                 to="/product/utility"
                 @click="closeMobileMenu"
-                class="block py-2 text-white hover:text-teal-500 text-base"
+                class="block py-2 text-white hover:text-stone-500 text-base"
               >
                 Tiện ích
               </router-link>
@@ -283,9 +252,9 @@
           </div>
 
           <router-link
-            to="/product/document"
+            to="/product/clothing"
             @click="closeMobileMenu"
-            class="block py-2 text-white hover:text-teal-500 font-medium text-lg"
+            class="block py-2 text-white hover:text-stone-500 font-medium text-lg"
           >
             Tài liệu
           </router-link>
@@ -293,7 +262,7 @@
           <router-link
             to="/contact"
             @click="closeMobileMenu"
-            class="block py-2 text-white hover:text-teal-500 font-medium text-lg"
+            class="block py-2 text-white hover:text-stone-500 font-medium text-lg"
           >
             Liên hệ
           </router-link>
@@ -303,7 +272,7 @@
             <router-link
               to="/list-notifications"
               @click="closeMobileMenu"
-              class="flex items-center text-white hover:text-teal-500 font-medium text-lg"
+              class="flex items-center text-white hover:text-stone-500 font-medium text-lg"
             >
               <span>Thông báo</span>
             </router-link>
@@ -547,5 +516,28 @@ body.menu-open {
     padding-left: 3.75rem;
     padding-right: 3.75rem;
   }
+}
+
+.nav-link-hover {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.nav-link-hover::after {
+  content: "";
+  position: absolute;
+  bottom: -0.5px;
+  left: 50%; /* Bắt đầu từ giữa */
+  width: 0; /* Độ rộng ban đầu = 0 */
+  height: 2px; /* Chiều cao border */
+  background-color: white;
+  transition: all 0.3s ease-in-out;
+  transform: translateX(-50%); /* Căn giữa */
+}
+
+.nav-link-hover:hover::after {
+  width: 100%;
+  /* Tràn ra toàn bộ chiều rộng */
 }
 </style>

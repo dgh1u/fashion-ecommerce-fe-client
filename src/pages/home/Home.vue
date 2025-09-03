@@ -1,10 +1,9 @@
 <template>
   <Layout>
-
     <!-- Local Shops Information Section -->
     <div class="py-12">
       <div class="container mx-auto px-4">
-        <div class="text-center mb-10" data-aos="zoom-out">
+        <div class="text-center mb-10">
           <div class="pb-3">
             <span class="text-center text-3xl font-bold">
               Danh mục sản phẩm
@@ -113,9 +112,9 @@
                 class="w-full h-full object-cover"
               />
             </div>
-            <div class="p-4 ">
+            <div class="p-4">
               <div class="flex items-center mb-2">
-                <Unlink2 class="w-5 h-5 text-emerald-600 mr-2 mb-1.5 " />
+                <Unlink2 class="w-5 h-5 text-emerald-600 mr-2 mb-1.5" />
                 <h3 class="font-semibold text-lg">Phụ kiện</h3>
               </div>
               <p class="text-gray-600 text-sm mb-3">
@@ -160,12 +159,6 @@
         </Vue3Marquee>
       </div>
     </div>
-
-   
-           
-       
-   
-   
   </Layout>
 </template>
 
@@ -198,7 +191,6 @@ const imgArray = [
   "src/assets/marquee-items/logo4.svg",
 
   "src/assets/marquee-items/logo5.svg",
-
 ];
 
 // Testimonials data

@@ -1,5 +1,7 @@
 <template>
   <div class="flex flex-col min-h-screen">
+    <!-- Secondary Header -->
+    <SecondaryHeader />
     <!-- Header -->
     <Header class="bg-gray-300 p-2" />
     <HomeBanner />
@@ -14,7 +16,6 @@
         <slot />
         <!-- Khu vực hiển thị nội dung trang -->
       </main>
-      
 
       <!-- Sidebar Right -->
       <div class="col-span-1 bg-white text-center"></div>
@@ -27,6 +28,7 @@
 
 <script setup>
 import Header from "../components/header/Header.vue";
+import SecondaryHeader from "../components/header/SecondaryHeader.vue";
 import Footer from "../components/footer/Footer.vue";
 import HomeBanner from "../components/banner/HomeBanner.vue";
 </script>

@@ -17,9 +17,9 @@
       class="slider-red"
     />
     <p class="pt-2 text-sm text-center font-medium">
-      Giá từ: <strong>{{ modelValue[0] }} Triệu</strong>
+      Giá từ: <strong>{{ formatPrice(modelValue[0]) }}</strong>
       <span class="text-gray-500"> đến </span>
-      <strong>{{ modelValue[1] }} Triệu</strong>
+      <strong>{{ formatPrice(modelValue[1]) }}</strong>
     </p>
 
     <!-- Checkbox chọn khoảng giá nhanh -->
@@ -58,7 +58,7 @@ import { Check as CheckIcon } from "lucide-vue-next";
 const props = defineProps({
   modelValue: {
     type: Array,
-    default: () => [0, 30],
+    default: () => [0, 100], // Đổi sang 0-100 (tương ứng với 0-10 triệu VND)
   },
   min: {
     type: Number,
@@ -66,7 +66,7 @@ const props = defineProps({
   },
   max: {
     type: Number,
-    default: 30,
+    default: 100, // Đổi sang 100 (tương ứng với 10 triệu VND)
   },
   step: {
     type: Number,
@@ -80,18 +80,31 @@ const props = defineProps({
 
 const emits = defineEmits(["update:modelValue"]);
 
-// Danh sách các khoảng giá nhanh
+// Danh sách các khoảng giá nhanh (theo trăm nghìn đồng)
 const quickPriceRanges = [
-  { label: "Dưới 1 Triệu", min: 0, max: 1 },
-  { label: "1 - 2 Triệu", min: 1, max: 2 },
-  { label: "2 - 3 Triệu", min: 2, max: 3 },
-  { label: "3 - 5 Triệu", min: 3, max: 5 },
-  { label: "5 - 10 Triệu", min: 5, max: 10 },
-  { label: "Trên 10 Triệu", min: 10, max: 30 },
+  { label: "Dưới 100k", min: 0, max: 1 },
+  { label: "100k - 200k", min: 1, max: 2 },
+  { label: "200k - 300k", min: 2, max: 3 },
+  { label: "300k - 500k", min: 3, max: 5 },
+  { label: "500k - 1 triệu", min: 5, max: 10 },
+  { label: "Trên 1 triệu", min: 10, max: 100 },
 ];
 
 // Lưu trạng thái khoảng giá nhanh được chọn
 const quickPriceSelected = ref(null);
+
+// Format hiển thị giá
+function formatPrice(value) {
+  if (value === 0) {
+    return "0đ";
+  } else if (value <= 10) {
+    // 0-10: hiển thị theo trăm nghìn (100k, 200k, ...)
+    return `${value * 100}k`;
+  } else {
+    // 10-100: hiển thị theo triệu (1.1 triệu, 1.2 triệu, ...)
+    return `${(value / 10).toFixed(1)} triệu`;
+  }
+}
 
 /**
  * Cập nhật giá trị slider và phát ra sự kiện
