@@ -133,7 +133,7 @@ const clearError = (field) => {
       <div class="text-sm text-gray-500 text-center">
         &copy; Toàn bộ bản quyền thuộc
         <router-link to="/home" class="text-blue-500 text-sm hover:font-bold">
-          Duong Minh Hieu
+          Nguyễn Văn Tuấn
         </router-link>
       </div>
     </div>
@@ -150,30 +150,26 @@ const clearError = (field) => {
 
         <!-- Logo -->
 
-        <div class="flex items-center justify-center gap-8">
+        <div class="flex items-center justify-center mb-2">
           <img
             src="@/assets/marquee-items/vnua-logo.png"
             alt="VNUA Logo"
             class="w-22 h-22 object-contain"
           />
-          <img
-            src="@/assets/vnua-services-logo.png"
-            alt="Second Logo"
-            class="w-48 h-48 object-contain"
-          />
+       
         </div>
 
         <!-- Tên dịch vụ -->
         <div class="mb-6">
-          <h4 class="text-3xl font-bold mb-4">VNUA Services</h4>
+          <h4 class="text-3xl font-bold mb-4">28.Host</h4>
           <p class="text-xl">
-            Kênh thông tin dịch vụ khu vực Học viện Nông nghiệp Việt Nam
+           Website bán quần áo
           </p>
         </div>
 
         <!-- Thông tin sinh viên -->
         <div class="text-lg">
-          <p>(*) Dương Minh Hiếu - 6667537</p>
+          <p>(*) Nguyễn Văn Tuấn</p>
         </div>
       </div>
     </div>

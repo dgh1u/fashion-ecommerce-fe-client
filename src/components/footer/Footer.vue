@@ -191,7 +191,7 @@
 
       <!-- Thông tin bản quyền -->
       <div class="border-gray-700 mt-8 text-center text-base text-gray-400">
-        Copyright © 2025. Toàn bộ bản quyền thuộc Dương Minh Hiếu.
+        Copyright © 2025. Toàn bộ bản quyền thuộc Nguyễn Văn Tuấn.
       </div>
     </div>
   </footer>
