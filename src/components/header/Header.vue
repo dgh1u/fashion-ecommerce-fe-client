@@ -44,15 +44,7 @@
             Túi xách
           </router-link>
 
-          <router-link
-            data-aos="zoom-out"
-            data-aos-duration="800"
-            to="/product/shoes"
-            exact-active-class="border-b-2 border-white"
-            class="py-0.5 nav-link-hover transition duration-150"
-          >
-            Giày dép
-          </router-link>
+       
 
           <router-link
             data-aos="zoom-out"
@@ -167,7 +159,7 @@
             </div>
             <div class="pl-4" v-show="showRoomDropdown">
               <router-link
-                to="/product/motel"
+                to="/product/class"
                 @click="closeMobileMenu"
                 class="block py-2 text-white hover:text-stone-500 text-base"
               >

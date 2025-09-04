@@ -4,14 +4,14 @@
       <div
         class="text-3xl font-bold flex flex-col items-center justify-center flex-wrap space-y-2"
       >
-        <span class="text-gray-800"> QUẦN ÁO </span>
+        <span class="text-gray-800"> TÚI XÁCH </span>
       </div>
     </div>
     <!-- Wrapper toàn trang: hướng cột trên mobile, hướng hàng ngang từ md trở lên -->
     <div class="flex flex-col md:flex-row min-h-screen py-6 bg-white">
       <!-- Bộ lọc: chiếm toàn bộ chiều rộng trên mobile, tự động shrink trên desktop -->
       <div class="w-full md:w-auto md:mr-4 mb-4 md:mb-0">
-        <MotelFilter @update:filters="handleFilterUpdate" />
+        <MotelFilter :first-class="'TUI_XACH'" @update:filters="handleFilterUpdate" />
       </div>
       <!-- Nội dung chính: chiếm phần còn lại -->
       <div class="flex-1 flex flex-col bg-white">
@@ -168,7 +168,7 @@ import { Empty } from "ant-design-vue";
 
 import { Search } from "lucide-vue-next";
 import ClothingCard from "../../../components/card/ClothingCard.vue";
-import MotelFilter from "../../../components/filter/MotelFilter.vue";
+import MotelFilter from "../../../components/filter/Filter.vue";
 
 // Format price with thousand separators
 const formatPrice = (price) => {
@@ -265,6 +265,11 @@ function buildQueryParams() {
   // Thêm loại quán
   if (filters.value.secondMotelSelected) {
     params.secondMotel = filters.value.secondMotelSelected;
+  }
+
+  // Thêm danh mục phụ (secondClass)
+  if (filters.value.secondClassesSelected && filters.value.secondClassesSelected.length > 0) {
+    params.secondClass = filters.value.secondClassesSelected.join(',');
   }
 
   // Thêm khoảng giá (priceRange) - chuyển từ trăm nghìn đồng sang VND

@@ -12,9 +12,6 @@ import ClothingDetail from "../pages/product/clothing/ClothingDetail.vue";
 import BagsDetail from "../pages/product/bags/BagsDetail.vue";
 import BagsList from "../pages/product/bags/BagsList.vue";
 
-import ShoesList from "../pages/product/shoes/ShoesList.vue";
-import ShoesDetail from "../pages/product/shoes/ShoesDetail.vue";
-
 import AccessoriesDetail from "../pages/product/accessories/AccessoriesDetail.vue";
 import AccessoriesList from "../pages/product/accessories/AccessoriesList.vue";
 
@@ -83,24 +80,6 @@ export default [
     path: "/product/bags/:id",
     name: "BagsDetail",
     component: BagsDetail,
-    meta: {
-      requiresAuth: false,
-    },
-  },
-
-  {
-    path: "/product/shoes",
-    name: "ShoesList",
-    component: ShoesList,
-    meta: {
-      requiresAuth: false,
-    },
-  },
-
-  {
-    path: "/product/shoes/:id",
-    name: "ShoesDetail",
-    component: ShoesDetail,
     meta: {
       requiresAuth: false,
     },

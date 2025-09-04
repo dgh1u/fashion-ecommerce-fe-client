@@ -14,7 +14,7 @@
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <!-- Quần áo Card -->
           <router-link
             to="/product/restaurant"
@@ -71,33 +71,7 @@
             </div>
           </router-link>
 
-          <!-- Giày dép Card -->
-          <router-link
-            to="/product/beverage"
-            class="bg-white rounded-lg shadow-md overflow-hidden transition-all hover:shadow-xl hover:scale-105"
-            data-aos="zoom-in"
-          >
-            <div class="h-40 overflow-hidden">
-              <img
-                src="@/assets/home-page/giay-dep.png"
-                alt="Giày dép"
-                class="w-full h-full object-cover"
-              />
-            </div>
-            <div class="p-4">
-              <div class="flex items-center mb-2">
-                <Footprints class="w-5 h-5 text-amber-700 mr-2 mb-2" />
-                <h3 class="font-semibold text-lg">Giày dép</h3>
-              </div>
-              <p class="text-gray-600 text-sm mb-3">
-                Giày dép thời trang cao cấp cho nam và nữ.
-              </p>
-              <div class="flex items-center text-sm text-gray-500">
-                <MapPin class="w-4 h-4 mr-1" />
-                <span>80+ sản phẩm</span>
-              </div>
-            </div>
-          </router-link>
+        
 
           <!-- Phụ kiện Card -->
           <router-link

@@ -13,7 +13,7 @@
           </div>
           <p class="text-black text-base leading-relaxed mb-4">
             TUAN Fashion là Website thương mại điện tử chuyên về thời trang.
-            Chuyên cung cấp các sản phẩm về quần áo, giày dép, phụ kiện.
+            Chuyên cung cấp các sản phẩm về quần áo, phụ kiện.
           </p>
         </div>
 
@@ -125,14 +125,7 @@
                 Túi xách
               </a>
             </li>
-            <li>
-              <a
-                href="/product/shoes"
-                class="hover:text-blue-400 transition-colors duration-200"
-              >
-                Giày dép
-              </a>
-            </li>
+    
             <li>
               <a
                 href="/product/accessories"

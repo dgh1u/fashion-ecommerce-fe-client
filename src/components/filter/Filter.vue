@@ -17,6 +17,47 @@
       />
     </div>
 
+    <!-- Bộ lọc phân loại sản phẩm (secondClass) -->
+    <div class="mb-4">
+      <div class="p-3 text-left">
+        <span class="font-bold text-base mb-2">Phân loại</span>
+        
+      </div>
+      <div class="grid grid-cols-1" v-if="currentSecondClassOptions.length > 0">
+        <div
+          v-for="(secondClass, idx) in currentSecondClassOptions"
+          :key="idx"
+          class="flex items-center p-2 rounded-lg cursor-pointer hover:text-stone-500"
+          :class="{ 'text-stone-500': isSecondClassSelected(secondClass.value) }"
+          @click="toggleSecondClass(secondClass.value)"
+        >
+          <div class="relative">
+            <input
+              type="checkbox"
+              class="hidden"
+              :checked="isSecondClassSelected(secondClass.value)"
+              readonly
+            />
+            <div
+              class="w-5 h-5 border border-gray-300 rounded flex items-center justify-center"
+              :class="{
+                'bg-stone-500 border-stone-500 ': isSecondClassSelected(secondClass.value),
+              }"
+            >
+              <CheckIcon
+                v-if="isSecondClassSelected(secondClass.value)"
+                class="w-3 h-3 text-white"
+              />
+            </div>
+          </div>
+          <span class="ml-2 text-xs font-medium">{{ secondClass.label }}</span>
+        </div>
+      </div>
+      <div v-else class="text-xs text-gray-400 p-2">
+        Không có phân loại cho {{ props.firstClass }}
+      </div>
+    </div>
+
     <!-- Bộ lọc giới tính -->
     <div class="mb-4">
       <div class="p-3 text-left">
@@ -212,7 +253,7 @@
 </template>
 
 <script setup>
-import { ref, watch, defineEmits } from "vue";
+import { ref, watch, defineEmits, defineProps, computed } from "vue";
 import PriceRange from "@/components/range-slider/PriceRange.vue";
 import Color, { colorSets } from "@/components/color/Color.vue";
 
@@ -222,6 +263,14 @@ import {
   RefreshCw as ResetIcon,
   SlidersHorizontal,
 } from "lucide-vue-next";
+
+// Định nghĩa props để nhận firstClass từ component cha
+const props = defineProps({
+  firstClass: {
+    type: String,
+    default: null
+  }
+});
 
 // Định nghĩa emit để gửi thông tin bộ lọc đến component cha
 const emit = defineEmits(["update:filters"]);
@@ -234,6 +283,43 @@ const acreageRangeRef = ref(null);
 const priceRangeLocal = ref([0, 100]);
 const acreageRangeLocal = ref([5, 95]);
 const selectedGenders = ref([]); // Thay đổi thành mảng để lưu nhiều giá trị
+const selectedSecondClasses = ref([]); // Phân loại sản phẩm được chọn
+
+// Danh sách các phân loại theo từng loại sản phẩm
+const secondClassOptions = {
+  QUAN_AO: [
+    { label: "Áo thun", value: "Áo thun" },
+    { label: "Áo sơ mi", value: "Áo sơ mi" },
+    { label: "Áo kiểu", value: "Áo kiểu" },
+    { label: "Áo khoác", value: "Áo khoác" },
+    { label: "Quần dài", value: "Quần dài" },
+    { label: "Quần ngắn", value: "Quần ngắn" },
+    { label: "Váy", value: "Váy" },
+    { label: "Đồ lót", value: "Đồ lót" },
+    { label: "Đồ mặc nhà", value: "Đồ mặc nhà" }
+  ],
+  TUI_XACH: [
+    { label: "Ví", value: "Ví" },
+    { label: "Túi xách", value: "Túi xách" },
+    { label: "Balo", value: "Balo" },
+    { label: "Vali", value: "Vali" }
+  ],
+  PHU_KIEN: [
+    { label: "Nón&Mũ", value: "Nón&Mũ" },
+    { label: "Khăn Choàng", value: "Khăn Choàng" },
+    { label: "Tất", value: "Tất" },
+    { label: "Găng tay", value: "Găng tay" }
+  ]
+};
+
+// Computed property để lấy danh sách secondClass dựa trên firstClass hiện tại
+const currentSecondClassOptions = computed(() => {
+ 
+  if (!props.firstClass) return [];
+  const options = secondClassOptions[props.firstClass] || [];
+ 
+  return options;
+});
 
 // Danh sách các khu vực
 const districtOptions = [
@@ -315,6 +401,22 @@ function isGenderSelected(value) {
   return selectedGenders.value.includes(value);
 }
 
+// Xử lý chọn secondClass
+function toggleSecondClass(value) {
+  const index = selectedSecondClasses.value.indexOf(value);
+  if (index === -1) {
+    selectedSecondClasses.value.push(value);
+  } else {
+    selectedSecondClasses.value.splice(index, 1);
+  }
+  updateFilters();
+}
+
+// Kiểm tra secondClass đã được chọn chưa
+function isSecondClassSelected(value) {
+  return selectedSecondClasses.value.includes(value);
+}
+
 // Xử lý chọn size
 function toggleSize(value) {
   const index = selectedSizes.value.indexOf(value);
@@ -373,6 +475,7 @@ function resetAll() {
   selectedMaterials.value = [];
   selectedColors.value = [];
   selectedGenders.value = []; // Đặt lại giới tính
+  selectedSecondClasses.value = []; // Đặt lại phân loại
 
   // Đặt lại lựa chọn nhanh trong component PriceRange
   if (priceRangeRef.value) {
@@ -412,17 +515,24 @@ function updateFilters() {
   emit("update:filters", {
     priceRange: priceRangeLocal.value,
     acreageRange: acreageRangeLocal.value,
-    districtSelected: selectedDistrict.value,
+    
     sizesSelected: selectedSizes.value, // Filter theo sizes
     materialsSelected: selectedMaterials.value, // Filter theo materials
     colorsSelected: selectedColors.value, // Filter theo colors
     gender: genderValue, // Filter theo giới tính
+    secondClassesSelected: selectedSecondClasses.value, // Filter theo phân loại
   });
 }
 
 // Theo dõi thay đổi của các bộ lọc để cập nhật
 watch(priceRangeLocal, updateFilters);
 watch(acreageRangeLocal, updateFilters);
+
+// Theo dõi thay đổi firstClass để reset secondClass
+watch(() => props.firstClass, (newFirstClass) => {
+  selectedSecondClasses.value = [];
+  updateFilters();
+});
 </script>
 
 <style scoped>

@@ -11,7 +11,7 @@
     <div class="flex flex-col md:flex-row min-h-screen py-6 bg-white">
       <!-- Bộ lọc: chiếm toàn bộ chiều rộng trên mobile, tự động shrink trên desktop -->
       <div class="w-full md:w-auto md:mr-4 mb-4 md:mb-0">
-        <MotelFilter @update:filters="handleFilterUpdate" />
+        <MotelFilter :first-class="'QUAN_AO'" @update:filters="handleFilterUpdate" />
       </div>
       <!-- Nội dung chính: chiếm phần còn lại -->
       <div class="flex-1 flex flex-col bg-white">
@@ -168,7 +168,7 @@ import { Empty } from "ant-design-vue";
 
 import { Search } from "lucide-vue-next";
 import ClothingCard from "../../../components/card/ClothingCard.vue";
-import MotelFilter from "../../../components/filter/MotelFilter.vue";
+import MotelFilter from "../../../components/filter/Filter.vue";
 
 // Format price with thousand separators
 const formatPrice = (price) => {
@@ -305,6 +305,11 @@ function buildQueryParams() {
   // Thêm giới tính (gender)
   if (filters.value.gender !== null) {
     params.gender = filters.value.gender;
+  }
+
+  // Thêm phân loại secondClass đã chọn
+  if (filters.value.secondClassesSelected && filters.value.secondClassesSelected.length > 0) {
+    params.secondClass = filters.value.secondClassesSelected.join(",");
   }
 
   // Xử lý sắp xếp
