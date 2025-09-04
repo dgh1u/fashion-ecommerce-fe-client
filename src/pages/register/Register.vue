@@ -138,31 +138,25 @@ const clearError = (field) => {
           <!-- Logo -->
           <!-- Logo -->
 
-          <div class="flex items-center justify-center gap-8">
+          <div class="flex items-center justify-center mb-2">
             <img
               src="@/assets/marquee-items/vnua-logo.png"
               alt="VNUA Logo"
               class="w-22 h-22 object-contain"
             />
-            <img
-              src="@/assets/vnua-services-logo.png"
-              alt="Second Logo"
-              class="w-48 h-48 object-contain"
-            />
+          
           </div>
 
           <!-- Tên dịch vụ -->
           <div class="mb-6">
-            <h4 class="text-3xl font-bold mb-4">VNUA Services</h4>
+            <h4 class="text-3xl font-bold mb-4">28.Host</h4>
             <p class="text-xl">
-              Kênh thông tin dịch vụ khu vực Học viện Nông nghiệp Việt Nam
+              Website bán quần áo
             </p>
           </div>
 
           <!-- Thông tin sinh viên -->
-          <div class="text-lg">
-            <p>(*) Dương Minh Hiếu - 6667537</p>
-          </div>
+          
         </div>
       </div>
       <!-- Cột trái: Form đăng ký -->
