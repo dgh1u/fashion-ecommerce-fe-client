@@ -3,7 +3,6 @@ import Home from "../pages/home/Home.vue";
 import NotFound from "../pages/not-found/NotFound.vue";
 import Contact from "../pages/contact/Contact.vue";
 
-import PaymentResult from "../pages/payment-result/PaymentResult.vue";
 import PrivacyPolicy from "../pages/policy/PrivacyPolicy.vue";
 
 import ClothingList from "../pages/product/clothing/ClothingList.vue";
@@ -100,15 +99,6 @@ export default [
     component: AccessoriesDetail,
     meta: {
       requiresAuth: false,
-    },
-  },
-
-  {
-    path: "/payment/:id/result",
-    name: "PaymentResult",
-    component: PaymentResult,
-    meta: {
-      requiresAuth: true,
     },
   },
 

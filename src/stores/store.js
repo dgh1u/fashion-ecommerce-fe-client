@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { loginUser, logoutUser, getAvatar } from "../apis/authService";
-import { ref } from "vue";
+import { cartService } from "../apis/cartService";
+import { ref, computed } from "vue";
 
 export const useAuthStore = defineStore(
   "auth",
@@ -80,5 +81,102 @@ export const useAuthStore = defineStore(
         },
       ],
     },
+  }
+);
+
+// Cart Store
+export const useCartStore = defineStore(
+  "cart",
+  () => {
+    const cart = ref(null);
+    const loading = ref(false);
+
+    // Computed properties
+    const cartItemCount = computed(() => {
+      return cart.value?.items?.length || 0;
+    });
+
+    const cartTotal = computed(() => {
+      return cart.value?.totalAmount || 0;
+    });
+
+    const cartItems = computed(() => {
+      return cart.value?.items || [];
+    });
+
+    // Actions
+    const fetchCart = async () => {
+      try {
+        loading.value = true;
+        const response = await cartService.getCart();
+        cart.value = response.data;
+      } catch (error) {
+        console.error('Error fetching cart:', error);
+      } finally {
+        loading.value = false;
+      }
+    };
+
+    const addToCart = async (productId, sizeId, quantity = 1) => {
+      try {
+        const response = await cartService.addToCart(productId, sizeId, quantity);
+        cart.value = response;
+        return response;
+      } catch (error) {
+        console.error('Error adding to cart:', error);
+        throw error;
+      }
+    };
+
+    const updateCartItem = async (cartItemId, quantity) => {
+      try {
+        const response = await cartService.updateCartItem(cartItemId, quantity);
+        cart.value = response.data;
+        return response;
+      } catch (error) {
+        console.error('Error updating cart item:', error);
+        throw error;
+      }
+    };
+
+    const removeFromCart = async (cartItemId) => {
+      try {
+        const response = await cartService.removeFromCart(cartItemId);
+        cart.value = response.data;
+        return response;
+      } catch (error) {
+        console.error('Error removing from cart:', error);
+        throw error;
+      }
+    };
+
+    const clearCart = async () => {
+      try {
+        await cartService.clearCart();
+        cart.value = {
+          cartId: null,
+          userId: null,
+          totalItems: 0,
+          totalAmount: 0,
+          items: []
+        };
+      } catch (error) {
+        console.error('Error clearing cart:', error);
+        throw error;
+      }
+    };
+
+    return {
+      cart,
+      loading,
+      cartItemCount,
+      cartTotal,
+      cartItems,
+      fetchCart,
+      addToCart,
+      updateCartItem,
+      removeFromCart,
+      clearCart
+    };
   }
 );

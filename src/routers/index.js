@@ -1,12 +1,16 @@
 import { createRouter, createWebHistory } from "vue-router";
 import authRoutes from "./authRoutes";
 import homeRoutes from "./homeRoutes";
+import cartRoutes from "./cartRoutes";
+import orderRoutes from "./orderRoutes";
 import { useAuthStore } from "@/stores/store";
 
 // Khai báo các routes của ứng dụng
 const routes = [
   ...authRoutes,
   ...homeRoutes,
+  ...cartRoutes,
+  ...orderRoutes,
   {
     path: "/",
     redirect: "/home",

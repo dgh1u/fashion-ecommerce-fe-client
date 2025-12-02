@@ -14,7 +14,7 @@
         <div class="col-span-2 ml-10">
           <router-link
             to="/home"
-            exact-active-class="text-white-500 font-bold"
+            exact-active-class="text-white font-bold"
             class="block"
           >
             <LogoText data-aos="zoom-out" data-aos-duration="800" />
@@ -58,7 +58,10 @@
         </div>
 
         <!-- Phần đăng nhập / dropdown user bên phải -->
-        <div class="col-span-4 flex justify-end">
+        <div class="col-span-4 flex justify-end items-center gap-4">
+          <!-- Cart Icon (hiển thị cho tất cả user) -->
+          <CartIcon />
+          
           <div v-if="authStore.isAuthenticated" class="flex items-center">
             <!-- Dropdown thông tin người dùng -->
             <DropdownMenu />
@@ -66,16 +69,6 @@
 
           <!-- Hiển thị khi chưa đăng nhập -->
           <div v-else class="flex items-center">
-            <router-link
-              to="/create-product"
-              data-aos="zoom-out"
-              data-aos-duration="800"
-              exact-active-class="bg-red-600"
-              class="flex items-center bg-red-500 hover:bg-red-600 text-white px-2 py-1 md:px-3 md:py-2 rounded-xl transition duration-150 text-xs md:text-sm lg:text-base"
-            >
-              <Edit size="14" class="mr-1 md:mr-2" />
-              <span>Đăng tin</span>
-            </router-link>
             <router-link
               to="/login"
               data-aos="zoom-out"
@@ -100,14 +93,20 @@
           <LogoText data-aos="zoom-out" data-aos-duration="800" />
         </router-link>
 
-        <!-- Mobile menu button -->
-        <button
-          @click="toggleMobileMenu"
-          class="z-20 text-white hover:text-stone-500 focus:outline-none"
-          aria-label="Toggle mobile menu"
-        >
-          <Menu v-if="!mobileMenuOpen" size="24" />
-        </button>
+        <!-- Mobile actions -->
+        <div class="flex items-center space-x-3 z-20">
+          <!-- Cart Icon -->
+          <CartIcon />
+          
+          <!-- Mobile menu button -->
+          <button
+            @click="toggleMobileMenu"
+            class="text-white hover:text-stone-500 focus:outline-none"
+            aria-label="Toggle mobile menu"
+          >
+            <Menu v-if="!mobileMenuOpen" size="24" />
+          </button>
+        </div>
       </div>
     </div>
 
@@ -318,6 +317,7 @@
 import { ref, onMounted, onUnmounted, watch } from "vue";
 import { useAuthStore } from "@/stores/store";
 import DropdownMenu from "@/components/header/DropdownMenu.vue";
+import CartIcon from "@/components/cart/CartIcon.vue";
 import { Bell, Edit, ChevronDown, Menu, X } from "lucide-vue-next";
 
 import LogoText from "@/components/logo/Logo.vue";
@@ -531,5 +531,10 @@ body.menu-open {
 .nav-link-hover:hover::after {
   width: 100%;
   /* Tràn ra toàn bộ chiều rộng */
+}
+
+/* Override màu logo trong header thành màu trắng */
+header .host {
+  color: #ffffff !important;
 }
 </style>

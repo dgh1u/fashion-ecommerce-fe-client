@@ -73,7 +73,7 @@
                 >
                   <button
                     @click="previousImage"
-                    class="bg-black bg-opacity-50 hover:bg-opacity-70 text-white rounded-full p-2 transition-all duration-200"
+                    class=" bg-opacity-50 hover:bg-opacity-70 text-white rounded-full p-2 transition-all duration-200"
                     :disabled="currentImageIndex === 0"
                     :class="{
                       'opacity-50 cursor-not-allowed': currentImageIndex === 0,
@@ -95,7 +95,7 @@
                   </button>
                   <button
                     @click="nextImage"
-                    class="bg-black bg-opacity-50 hover:bg-opacity-70 text-white rounded-full p-2 transition-all duration-200"
+                    class=" bg-opacity-50 hover:bg-opacity-70 text-white rounded-full p-2 transition-all duration-200"
                     :disabled="currentImageIndex === imageUrls.length - 1"
                     :class="{
                       'opacity-50 cursor-not-allowed':
@@ -126,56 +126,7 @@
                   {{ currentImageIndex + 1 }} / {{ imageUrls.length }}
                 </div>
               </div>
-            </div>
-          </div>
-
-          <!-- Các nút thao tác dành cho chủ bài đăng -->
-          <div class="py-4 sm:py-8">
-            <div v-if="isOwner" class="p-4 rounded-xl">
-              <div class="text-center">
-                <span class="font-semibold text-base sm:text-lg">Thao tác</span>
-              </div>
-              <div class="pt-4">
-                <div
-                  class="w-full py-2 rounded-xl flex items-center justify-center font-medium bg-sky-100 text-sm sm:text-base"
-                >
-                  <span class="font-normal">Trạng thái:&nbsp;</span>
-                  <span
-                    :class="{
-                      'text-green-500': displayStatus === 'Đã duyệt',
-                      'text-yellow-500': displayStatus === 'Chờ duyệt',
-                      'text-red-500': displayStatus === 'Bị khóa',
-                    }"
-                  >
-                    {{ displayStatus }}
-                  </span>
-                </div>
-              </div>
-              <div class="py-2">
-                <router-link
-                  :to="`/update-product/${product.id}`"
-                  class="bg-yellow-500 hover:bg-yellow-600 w-full py-2 sm:py-3 rounded-xl flex items-center justify-center text-white text-sm sm:text-base"
-                >
-                  <span class="font-medium">Cập nhật</span>
-                </router-link>
-              </div>
-              <div class="text-white">
-                <button
-                  @click="toggleHideProduct"
-                  :class="
-                    product.del === false
-                      ? 'bg-red-400 hover:bg-red-500'
-                      : 'bg-green-400 hover:bg-green-500'
-                  "
-                  class="w-full py-2 sm:py-3 rounded-xl mt-2 flex items-center justify-center text-white text-sm sm:text-base"
-                >
-                  <span class="font-medium">
-                    {{
-                      product.del === false ? "Ẩn tin đăng" : "Hiện tin đăng"
-                    }}
-                  </span>
-                </button>
-              </div>
+        
             </div>
           </div>
         </div>
@@ -358,14 +309,14 @@
                         </div>
                       </div>
                     </div>
-                    <div class="text-white font-medium pt-2 text-lg">
+                    <div class=" font-medium pt-2 text-lg">
                       <button
-                        class="w-full py-3 transition-colors rounded-xl"
+                        class="w-full py-3 transition-colors rounded-xl flex items-center justify-center gap-2"
                         :class="
                           selectedSize &&
                           quantity > 0 &&
                           quantity <= getMaxQuantity()
-                            ? 'bg-stone-800 hover:bg-stone-900'
+                            ? 'bg-white hover:bg-stone-300 border border-stone-600 border-2'
                             : 'bg-gray-400 cursor-not-allowed'
                         "
                         :disabled="
@@ -375,7 +326,7 @@
                         "
                         @click="addToCart"
                       >
-                        Thêm vào giỏ hàng
+                        <ShoppingCart/> Thêm vào giỏ hàng
                       </button>
                     </div>
                     <div class="text-white font-medium text-lg">
@@ -519,7 +470,7 @@
         </div>
       </div>
 
-      <div class="w-full bg-white px-4 pb-4">
+      <div class="w-full bg-white p-8">
         <!-- Description heading with bolder underline -->
         <div class="border-b-2 border-blue-500 inline-block">
           <span class="text-lg font-semibold">Mô tả</span>
@@ -549,6 +500,7 @@ import { useAuthStore } from "@/stores/store";
 
 import { getProfile } from "@/apis/authService.js";
 import { message } from "ant-design-vue";
+import { useCartStore } from "@/stores/store";
 import {
   Phone,
   MapPin,
@@ -561,6 +513,8 @@ import {
   Expand,
   Tag,
   GraduationCap,
+  ShoppingBagIcon,
+  ShoppingCart,
 } from "lucide-vue-next";
 import {
   MapPin as MapPinIcon,
@@ -570,6 +524,8 @@ import {
 
 const route = useRoute();
 const router = useRouter();
+const authStore = useAuthStore();
+const cartStore = useCartStore();
 
 const product = ref(null);
 const errorMsg = ref("");
@@ -616,21 +572,7 @@ const mapUrl = computed(() => {
   return `https://maps.google.com/maps?q=${encodedAddress}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
 });
 
-const displayStatus = computed(() => {
-  if (!product.value) return "";
-
-  if (product.value.approved === true && product.value.notApproved === false) {
-    return "Đã duyệt";
-  } else if (
-    product.value.approved === true &&
-    product.value.notApproved === true
-  ) {
-    return "Chờ duyệt";
-  } else if (product.value.approved === false) {
-    return "Bị khóa";
-  }
-  return "";
-});
+// Xóa computed displayStatus vì không còn cần logic duyệt bài
 
 // Xử lý hiển thị avatar
 const finalAvatar = computed(() => {
@@ -931,7 +873,13 @@ function validateQuantity() {
 }
 
 // Updated addToCart function
-const addToCart = () => {
+const addToCart = async () => {
+  if (!authStore.isAuthenticated) {
+    message.warning("Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng");
+    router.push('/login');
+    return;
+  }
+
   if (!selectedSize.value) {
     message.warning("Vui lòng chọn kích thước");
     return;
@@ -942,14 +890,25 @@ const addToCart = () => {
     return;
   }
 
-  // TODO: Implement add to cart functionality with size and quantity
-  message.success(
-    `Đã thêm ${quantity.value} sản phẩm size ${selectedSize.value.name} vào giỏ hàng`
-  );
+  try {
+    await cartStore.addToCart(product.value.id, selectedSize.value.id, quantity.value);
+    message.success(
+      `Đã thêm ${quantity.value} sản phẩm size ${selectedSize.value.name} vào giỏ hàng`
+    );
+  } catch (error) {
+    console.error("Error adding to cart:", error);
+    message.error("Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng");
+  }
 };
 
 // Add buyNow function
-const buyNow = () => {
+const buyNow = async () => {
+  if (!authStore.isAuthenticated) {
+    message.warning("Vui lòng đăng nhập để mua sản phẩm");
+    router.push('/login');
+    return;
+  }
+
   if (!selectedSize.value) {
     message.warning("Vui lòng chọn kích thước");
     return;
@@ -960,10 +919,15 @@ const buyNow = () => {
     return;
   }
 
-  // TODO: Implement buy now functionality
-  message.success(
-    `Mua ngay ${quantity.value} sản phẩm size ${selectedSize.value.name}`
-  );
+  try {
+    // Add to cart first
+    await cartStore.addToCart(product.value.id, selectedSize.value.id, quantity.value);
+    // Then redirect to cart
+    router.push('/cart');
+  } catch (error) {
+    console.error("Error adding to cart:", error);
+    message.error("Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng");
+  }
 };
 
 onMounted(() => {

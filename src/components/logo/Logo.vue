@@ -1,26 +1,22 @@
 <template>
   <div class="logo-text">
-    <div class="tuan">TUAN</div>
-    <div class="fashion">Fashion</div>
+    <div class="host">28.Host</div>
   </div>
 </template>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+
 .logo-text {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Kaushan Script", cursive;
   line-height: 1;
   text-align: center;
 }
 
-.tuan {
+.host {
   font-size: 2.2em;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: 1px;
-}
-
-.fashion {
-  font-size: 1.5em;
-  font-weight: 600;
-  letter-spacing: 1px;
+  color: #000000;
 }
 </style>

@@ -343,7 +343,7 @@ const clearError = (field) => {
         <div class="text-sm text-gray-500 text-center">
           &copy; Toàn bộ bản quyền thuộc
           <router-link to="/home" class="text-blue-500 text-sm hover:font-bold">
-            Nguyễn Văn Tuấn
+            28.Host Team
           </router-link>
         </div>
       </div>

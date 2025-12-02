@@ -59,3 +59,13 @@ export const downloadImage = async (fileId) => {
     responseType: "blob",
   });
 };
+
+// Cập nhật thứ tự ảnh cho sản phẩm
+export const updateImageOrder = async (idProduct, imageIds) => {
+  return axios({
+    url: `/api/updateImageOrder/product/${idProduct}`,
+    method: "PUT",
+    data: imageIds,
+    headers: { "Content-Type": "application/json" },
+  });
+};

@@ -51,12 +51,12 @@
           <span>Danh sách tin đăng</span>
         </a>
         <a
-          href="/payment-history"
+          href="/orders"
           class="block py-1.5 text-base hover:text-stone-500 transition duration-150 flex items-center space-x-3"
           @click="closeMobileMenuIfNeeded"
         >
-          <Clock size="20" />
-          <span>Lịch sử nạp tiền</span>
+          <ShoppingBag size="20" />
+          <span>Lịch sử đơn hàng</span>
         </a>
         <div class="border-t my-2"></div>
         <a
@@ -112,10 +112,10 @@
         <span>Giỏ hàng</span>
       </a>
       <a
-        href="/payment-history"
+        href="/orders"
         class="block px-4 py-1.5 ml-2 text-base hover:text-stone-500 transition duration-150 flex items-center space-x-2"
       >
-        <Clock size="18" />
+        <ShoppingBag size="18" />
         <span>Lịch sử đơn hàng</span>
       </a>
 
@@ -138,7 +138,7 @@
 import { ref, computed, onMounted, defineProps } from "vue";
 import { useAuthStore } from "@/stores/store";
 import { useRouter } from "vue-router";
-import { Clock, User, LogOut, CreditCard, Folder } from "lucide-vue-next";
+import { ShoppingBag, User, LogOut, CreditCard, Folder } from "lucide-vue-next";
 import { getProfile } from "@/apis/authService";
 
 // Nhận props từ component cha

@@ -7,12 +7,11 @@
           <div class="flex flex-col mb-4">
             <!-- SAU: Logo text từ Logo.vue -->
             <div class="logo-text-footer mb-3">
-              <div class="tuan-footer">TUAN</div>
-              <div class="fashion-footer">Fashion</div>
+              <div class="host-footer">28.Host</div>
             </div>
           </div>
           <p class="text-black text-base leading-relaxed mb-4">
-            TUAN Fashion là Website thương mại điện tử chuyên về thời trang.
+            28.Host là Website thương mại điện tử chuyên về thời trang.
             Chuyên cung cấp các sản phẩm về quần áo, phụ kiện.
           </p>
         </div>
@@ -191,7 +190,7 @@
 
       <!-- Thông tin bản quyền -->
       <div class="border-gray-700 mt-8 text-center text-base text-gray-400">
-        Copyright © 2025. Toàn bộ bản quyền thuộc Nguyễn Văn Tuấn.
+        Copyright © 2025. Toàn bộ bản quyền thuộc 28.Host Team.
       </div>
     </div>
   </footer>
@@ -203,24 +202,19 @@ import { Facebook, MessageSquare, Mail, Phone, MapPin } from "lucide-vue-next";
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+
 .logo-text-footer {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Kaushan Script", cursive;
   line-height: 1;
   text-align: left;
-  width: 100px;
+  width: 120px;
 }
 
-.tuan-footer {
+.host-footer {
   font-size: 2.2em;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: 1px;
-  color: #000000; /* Chữ đen */
-}
-
-.fashion-footer {
-  font-size: 1.6em;
-  font-weight: 600;
-  letter-spacing: 1px;
-  color: #000000; /* Chữ đen */
+  color: #000000;
 }
 </style>

@@ -70,16 +70,9 @@
       </router-link>
       
      
+    
       <router-link
-        to="/payment"
-        class="flex items-center block py-1.5 md:py-2 px-4 md:px-10 rounded hover:text-stone-500 font-medium text-gray-700 text-xs md:text-sm lg:text-base"
-        active-class="bg-stone-400 text-white"
-      >
-        <CreditCard class="inline-block w-4 h-4 md:w-5 md:h-5 mr-1.5 md:mr-2" />
-        Giỏ hàng
-      </router-link>
-      <router-link
-        to="/payment-history"
+        to="/order-history"
         class="flex items-center block py-1.5 md:py-2 px-4 md:px-10 rounded hover:text-stone-500 font-medium text-gray-700 text-xs md:text-sm lg:text-base"
         active-class="bg-stone-400 text-white"
       >

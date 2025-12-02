@@ -243,9 +243,7 @@ function buildQueryParams() {
   // Mặc định là quần áo
   params.firstClass = "QUAN_AO";
 
-  // Chỉ lấy tin đã duyệt và đang hiển thị
-  params.approved = true;
-  params.notApproved = false;
+  // Chỉ lấy tin đang hiển thị
   params.del = false;
 
   // Tham số phân trang

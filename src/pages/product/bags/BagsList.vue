@@ -240,12 +240,10 @@ function handleFilterUpdate(newFilters) {
 // Chuyển đổi bộ lọc thành query params cho API
 function buildQueryParams() {
   const params = {};
-  // Mặc định là quần áo
+  // Mặc định là túi xách
   params.firstClass = "TUI_XACH";
 
-  // Chỉ lấy tin đã duyệt và đang hiển thị
-  params.approved = true;
-  params.notApproved = false;
+  // Chỉ lấy tin đang hiển thị
   params.del = false;
 
   // Tham số phân trang
