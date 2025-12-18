@@ -1,540 +1,226 @@
 <template>
   <header
     :class="[
-      'bg-stone-500 text-white font-semibold shadow-md font-bold transition-all duration-500 w-full',
-      isSticky
-        ? 'fixed top-0 left-0 right-0 z-50 animate-slideDown'
-        : 'relative',
+      'bg-stone-200 shadow-sm transition-all duration-300 w-full border-b border-stone-200',
+      isSticky ? 'fixed top-0 left-0 right-0 z-50 shadow-md' : 'relative',
     ]"
   >
-    <div class="mx-auto px-3 sm:px-4 md:px-6 lg:px-30 py-2">
-      <!-- Grid layout cho Desktop -->
-      <div class="hidden md:grid grid-cols-12 items-center">
-        <!-- Logo ở cột 1-2 -->
-        <div class="col-span-2 ml-10">
-          <router-link
-            to="/home"
-            exact-active-class="text-white font-bold"
-            class="block"
-          >
-            <LogoText data-aos="zoom-out" data-aos-duration="800" />
-          </router-link>
-        </div>
-
-        <!-- Navigation ở cột 3-8 -->
-        <div
-          class="col-span-6 flex items-center ml-6 space-x-6 lg:space-x-12 text-lg font-semibold"
+    <!-- Desktop Header -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo -->
+        <router-link 
+          to="/home" 
+          class="flex-shrink-0"
+          data-aos="fade-right"
+          data-aos-duration="600"
         >
+          <LogoText />
+        </router-link>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center space-x-8">
           <router-link
-            data-aos="zoom-out"
-            data-aos-duration="800"
             to="/product/clothing"
-            exact-active-class="border-b-2 border-white "
-            class="py-0.5 nav-link-hover transition duration-150"
+            class="text-gray-700 hover:text-gray-900 font-medium transition-colors duration-200"
+            active-class="text-gray-900 font-semibold"
+            data-aos="fade-down"
+            data-aos-duration="600"
+            data-aos-delay="100"
           >
             Quần áo
           </router-link>
           <router-link
-            data-aos="zoom-out"
-            data-aos-duration="800"
             to="/product/bags"
-            exact-active-class="border-b-2 border-white"
-            class="py-0.5 nav-link-hover transition duration-150"
+            class="text-gray-700 hover:text-gray-900 font-medium transition-colors duration-200"
+            active-class="text-gray-900 font-semibold"
+            data-aos="fade-down"
+            data-aos-duration="600"
+            data-aos-delay="200"
           >
             Túi xách
           </router-link>
-
-       
-
           <router-link
-            data-aos="zoom-out"
-            data-aos-duration="800"
             to="/product/accessories"
-            exact-active-class="border-b-2 border-white"
-            class="py-0.5 nav-link-hover transition duration-150"
+            class="text-gray-700 hover:text-gray-900 font-medium transition-colors duration-200"
+            active-class="text-gray-900 font-semibold"
+            data-aos="fade-down"
+            data-aos-duration="600"
+            data-aos-delay="300"
           >
             Phụ kiện
           </router-link>
-        </div>
+        </nav>
 
-        <!-- Phần đăng nhập / dropdown user bên phải -->
-        <div class="col-span-4 flex justify-end items-center gap-4">
-          <!-- Cart Icon (hiển thị cho tất cả user) -->
-          <CartIcon />
-          
-          <div v-if="authStore.isAuthenticated" class="flex items-center">
-            <!-- Dropdown thông tin người dùng -->
-            <DropdownMenu />
+        <!-- Desktop Actions -->
+        <div class="hidden md:flex items-center space-x-4 ">
+          <!-- Cart -->
+          <div 
+            v-if="authStore.isAuthenticated"
+            class="text-gray-900"
+            data-aos="fade-left"
+            data-aos-duration="600"
+            data-aos-delay="100"
+          >
+            <CartIcon />
           </div>
 
-          <!-- Hiển thị khi chưa đăng nhập -->
-          <div v-else class="flex items-center">
+          <!-- User Menu or Login -->
+          <div
+            class="relative z-50"
+            data-aos="fade-left"
+            data-aos-duration="600"
+            data-aos-delay="200"
+          >
+            <DropdownMenu v-if="authStore.isAuthenticated" />
             <router-link
+              v-else
               to="/login"
-              data-aos="zoom-out"
-              data-aos-duration="800"
-              exact-active-class="bg-blue-600"
-              class="px-2 py-1 md:px-3 md:py-2 bg-blue-500 hover:bg-blue-600 text-white rounded ml-2 md:ml-3 lg:ml-5 text-xs md:text-sm lg:text-base"
+              class="inline-flex items-center px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors duration-200"
             >
               Đăng nhập
             </router-link>
           </div>
         </div>
-      </div>
 
-      <!-- Mobile layout -->
-      <div class="flex justify-between items-center md:hidden py-3">
-        <!-- Logo (always visible) -->
-        <router-link
-          to="/home"
-          exact-active-class="text-blue-500"
-          class="transition duration-150 z-20"
+        <!-- Mobile Menu Button -->
+        <button
+          @click="toggleMobileMenu"
+          class="md:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors duration-200"
+          aria-label="Toggle menu"
         >
-          <LogoText data-aos="zoom-out" data-aos-duration="800" />
-        </router-link>
-
-        <!-- Mobile actions -->
-        <div class="flex items-center space-x-3 z-20">
-          <!-- Cart Icon -->
-          <CartIcon />
-          
-          <!-- Mobile menu button -->
-          <button
-            @click="toggleMobileMenu"
-            class="text-white hover:text-stone-500 focus:outline-none"
-            aria-label="Toggle mobile menu"
-          >
-            <Menu v-if="!mobileMenuOpen" size="24" />
-          </button>
-        </div>
+          <Menu v-if="!mobileMenuOpen" :size="24" />
+          <X v-else :size="24" />
+        </button>
       </div>
     </div>
 
-    <!-- Mobile menu overlay -->
-    <div
-      v-show="mobileMenuOpen"
-      class="fixed inset-0 bg-black bg-opacity-50 z-10"
-      @click="closeMobileMenu"
-    ></div>
-
-    <!-- Mobile menu - làm cho nó chiếm toàn màn hình -->
-    <div
-      v-show="mobileMenuOpen"
-      class="fixed inset-0 z-50 bg-white flex flex-col overflow-y-auto transition-transform duration-300"
-      :class="mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'"
+    <!-- Mobile Menu -->
+    <transition
+      enter-active-class="transition ease-out duration-200"
+      enter-from-class="opacity-0 -translate-y-4"
+      enter-to-class="opacity-100 translate-y-0"
+      leave-active-class="transition ease-in duration-150"
+      leave-from-class="opacity-100 translate-y-0"
+      leave-to-class="opacity-0 -translate-y-4"
     >
-      <!-- Header của mobile menu với nút đóng -->
       <div
-        class="flex justify-between items-center px-4 pt-4 pb-2 border-b sticky top-0 bg-white"
+        v-show="mobileMenuOpen"
+        class="md:hidden border-t border-stone-200 bg-stone-50"
       >
-        <h3 class="font-semibold text-lg">Menu</h3>
-        <button
-          @click="closeMobileMenu"
-          class="text-white hover:text-red-500 focus:outline-none"
-          aria-label="Close menu"
-        >
-          <X size="24" />
-        </button>
-      </div>
-
-      <div class="p-4 space-y-5 flex-grow">
-        <!-- Mobile menu items - Simplified accordions -->
-        <div class="border-b pb-5">
-          <!-- Tìm trọ section -->
-          <div class="mb-4">
-            <div
-              class="flex justify-between items-center mb-3 cursor-pointer"
-              @click="showRoomDropdown = !showRoomDropdown"
-            >
-              <span class="font-medium text-lg">Tìm trọ</span>
-              <ChevronDown
-                size="20"
-                :class="
-                  showRoomDropdown
-                    ? 'transform rotate-180 transition-transform'
-                    : 'transition-transform'
-                "
-              />
-            </div>
-            <div class="pl-4" v-show="showRoomDropdown">
-              <router-link
-                to="/product/class"
-                @click="closeMobileMenu"
-                class="block py-2 text-white hover:text-stone-500 text-base"
-              >
-                Tìm phòng trọ
-              </router-link>
-              <router-link
-                to="/product/roommate"
-                @click="closeMobileMenu"
-                class="block py-2 text-white hover:text-stone-500 text-base"
-              >
-                Tìm người ở ghép
-              </router-link>
-            </div>
-          </div>
-
-          <!-- Ăn uống section -->
-          <div class="mb-4">
-            <div
-              class="flex justify-between items-center mb-3 cursor-pointer"
-              @click="showServiceDropdown = !showServiceDropdown"
-            >
-              <span class="font-medium text-lg">Ăn uống</span>
-              <ChevronDown
-                size="20"
-                :class="
-                  showServiceDropdown
-                    ? 'transform rotate-180 transition-transform'
-                    : 'transition-transform'
-                "
-              />
-            </div>
-            <div class="pl-4" v-show="showServiceDropdown">
-              <router-link
-                to="/product/restaurant"
-                @click="closeMobileMenu"
-                class="block py-2 text-white hover:text-stone-500 text-base"
-              >
-                Quán ăn
-              </router-link>
-              <router-link
-                to="/product/beverage"
-                @click="closeMobileMenu"
-                class="block py-2 text-white hover:text-stone-500 text-base"
-              >
-                Quán nước
-              </router-link>
-            </div>
-          </div>
-
-          <!-- Cửa hàng & Tiện ích section -->
-          <div class="mb-4">
-            <div
-              class="flex justify-between items-center mb-3 cursor-pointer"
-              @click="showShopDropdown = !showShopDropdown"
-            >
-              <span class="font-medium text-lg">Cửa hàng & Tiện ích</span>
-              <ChevronDown
-                size="20"
-                :class="
-                  showShopDropdown
-                    ? 'transform rotate-180 transition-transform'
-                    : 'transition-transform'
-                "
-              />
-            </div>
-            <div class="pl-4" v-show="showShopDropdown">
-              <router-link
-                to="/product/store"
-                @click="closeMobileMenu"
-                class="block py-2 text-white hover:text-stone-500 text-base"
-              >
-                Cửa hàng
-              </router-link>
-              <router-link
-                to="/product/utility"
-                @click="closeMobileMenu"
-                class="block py-2 text-white hover:text-stone-500 text-base"
-              >
-                Tiện ích
-              </router-link>
-            </div>
-          </div>
-
+        <div class="px-4 py-4 space-y-3">
+          <!-- Mobile Navigation Links -->
           <router-link
             to="/product/clothing"
             @click="closeMobileMenu"
-            class="block py-2 text-white hover:text-stone-500 font-medium text-lg"
+            class="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg font-medium transition-colors duration-200"
+            active-class="bg-gray-100 text-gray-900"
           >
-            Tài liệu
+            Quần áo
           </router-link>
-
           <router-link
-            to="/contact"
+            to="/product/bags"
             @click="closeMobileMenu"
-            class="block py-2 text-white hover:text-stone-500 font-medium text-lg"
+            class="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg font-medium transition-colors duration-200"
+            active-class="bg-gray-100 text-gray-900"
           >
-            Liên hệ
+            Túi xách
+          </router-link>
+          <router-link
+            to="/product/accessories"
+            @click="closeMobileMenu"
+            class="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg font-medium transition-colors duration-200"
+            active-class="bg-gray-100 text-gray-900"
+          >
+            Phụ kiện
           </router-link>
 
-          <!-- Thông báo section for mobile (only when authenticated) -->
-          <div v-if="authStore.isAuthenticated" class="mt-4">
-            <router-link
-              to="/list-notifications"
-              @click="closeMobileMenu"
-              class="flex items-center text-white hover:text-stone-500 font-medium text-lg"
-            >
-              <span>Thông báo</span>
-            </router-link>
-          </div>
-        </div>
+          <!-- Mobile Divider -->
+          <div v-if="authStore.isAuthenticated" class="border-t border-stone-200 my-3"></div>
 
-        <!-- Mobile auth buttons -->
-        <div class="pt-3 space-y-4">
-          <div v-if="authStore.isAuthenticated">
-            <router-link
-              to="/create-product"
-              @click="closeMobileMenu"
-              class="flex items-center justify-center w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-xl transition duration-150 mb-4 text-base"
-            >
-              <Edit size="18" class="mr-2" />
-              <span>Đăng tin</span>
-            </router-link>
+          <!-- Mobile Cart -->
+          <div v-if="authStore.isAuthenticated" class="px-4 py-2 text-gray-900">
+            <CartIcon />
+          </div>
 
-            <!-- Simplified User Profile Menu for Mobile -->
-            <div class="border-t pt-4">
-              <DropdownMenu
-                :closeMobileMenuFn="closeMobileMenu"
-                :isMobile="true"
-              />
-            </div>
+          <!-- Mobile User Actions -->
+          <div v-if="authStore.isAuthenticated" class="px-4 py-2 relative z-50">
+            <DropdownMenu :isMobile="true" :closeMobileMenuFn="closeMobileMenu" />
           </div>
-          <div v-else class="space-y-4 pb-8">
-            <router-link
-              to="/create-product"
-              @click="closeMobileMenu"
-              class="flex items-center justify-center w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-xl transition duration-150 text-base"
-            >
-              <Edit size="18" class="mr-2" />
-              <span>Đăng tin</span>
-            </router-link>
-            <router-link
-              to="/login"
-              @click="closeMobileMenu"
-              class="flex items-center justify-center w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded transition duration-150 text-base"
-            >
-              Đăng nhập
-            </router-link>
-          </div>
+          <router-link
+            v-else
+            to="/login"
+            @click="closeMobileMenu"
+            class="block w-full text-center px-4 py-2 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-800 transition-colors duration-200"
+          >
+            Đăng nhập
+          </router-link>
         </div>
       </div>
-    </div>
+    </transition>
   </header>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, watch } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { useAuthStore } from "@/stores/store";
 import DropdownMenu from "@/components/header/DropdownMenu.vue";
 import CartIcon from "@/components/cart/CartIcon.vue";
-import { Bell, Edit, ChevronDown, Menu, X } from "lucide-vue-next";
-
 import LogoText from "@/components/logo/Logo.vue";
+import { Menu, X } from "lucide-vue-next";
 
 const authStore = useAuthStore();
 
-// Biến kiểm tra header sticky khi cuộn trang
+// State
 const isSticky = ref(false);
-
-// Biến điều khiển hiển thị dropdown "Tìm trọ"
-const showRoomDropdown = ref(false);
-let hideRoomTimeout = null;
-
-// Biến điều khiển hiển thị dropdown "Dịch vụ"
-const showServiceDropdown = ref(false);
-let hideServiceTimeout = null;
-
-// Biến điều khiển hiển thị dropdown "Cửa hàng"
-const showShopDropdown = ref(false);
-let hideShopTimeout = null;
-
-// Biến điều khiển mobile menu
 const mobileMenuOpen = ref(false);
 
-// Biến theo dõi kích thước màn hình
-const windowWidth = ref(window.innerWidth);
-
-// Xử lý sự kiện cuộn trang để làm header cố định
+// Scroll handler for sticky header
 const handleScroll = () => {
-  isSticky.value = window.scrollY > window.innerHeight;
+  isSticky.value = window.scrollY > 100;
 };
 
-// Xử lý khi thay đổi kích thước màn hình
-const handleResize = () => {
-  windowWidth.value = window.innerWidth;
-  // Đóng mobile menu khi chuyển sang desktop
-  if (windowWidth.value >= 768 && mobileMenuOpen.value) {
-    mobileMenuOpen.value = false;
-    document.body.classList.remove("menu-open");
-  }
-};
-
-// Gắn và hủy bỏ sự kiện
-onMounted(() => {
-  window.addEventListener("scroll", handleScroll);
-  window.addEventListener("resize", handleResize);
-  handleResize(); // Khởi tạo kích thước ban đầu
-});
-
-onUnmounted(() => {
-  window.removeEventListener("scroll", handleScroll);
-  window.removeEventListener("resize", handleResize);
-});
-
-// Watch để thêm/xóa class 'menu-open' vào body khi mobile menu thay đổi
-watch(mobileMenuOpen, (isOpen) => {
-  if (isOpen) {
-    document.body.classList.add("menu-open");
-  } else {
-    document.body.classList.remove("menu-open");
-  }
-});
-
-// Hàm hiển thị dropdown Tìm trọ
-const showRoomMenu = () => {
-  clearTimeout(hideRoomTimeout);
-  showRoomDropdown.value = true;
-};
-
-// Hàm ẩn dropdown Tìm trọ với độ trễ
-const hideRoomMenu = () => {
-  hideRoomTimeout = setTimeout(() => {
-    showRoomDropdown.value = false;
-  }, 150);
-};
-
-// Hàm hiển thị dropdown Dịch vụ
-const showServiceMenu = () => {
-  clearTimeout(hideServiceTimeout);
-  showServiceDropdown.value = true;
-};
-
-// Hàm ẩn dropdown Dịch vụ với độ trễ
-const hideServiceMenu = () => {
-  hideServiceTimeout = setTimeout(() => {
-    showServiceDropdown.value = false;
-  }, 150);
-};
-
-// Hàm hiển thị dropdown Cửa hàng
-const showShopMenu = () => {
-  clearTimeout(hideShopTimeout);
-  showShopDropdown.value = true;
-};
-
-// Hàm ẩn dropdown Cửa hàng với độ trễ
-const hideShopMenu = () => {
-  hideShopTimeout = setTimeout(() => {
-    showShopDropdown.value = false;
-  }, 150);
-};
-
-// Biến và hàm điều khiển hiển thị dropdown thông báo
-const showNotifications = ref(false);
-const toggleNotifications = () => {
-  showNotifications.value = !showNotifications.value;
-};
-
-// Hàm đóng mở mobile menu
+// Toggle mobile menu
 const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value;
 };
 
-// Đóng mobile menu khi click vào một liên kết
+// Close mobile menu
 const closeMobileMenu = () => {
   mobileMenuOpen.value = false;
 };
+
+// Lifecycle hooks
+onMounted(() => {
+  window.addEventListener("scroll", handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
+});
 </script>
 
-<style>
-@keyframes slideDown {
-  0% {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-.animate-slideDown {
-  animation: slideDown 0.5s ease-in-out;
+<style scoped>
+/* Smooth transitions */
+.transition-colors {
+  transition-property: color, background-color, border-color;
 }
 
-/* Ngăn cuộn trang khi mobile menu đang mở */
-body.menu-open {
-  overflow: hidden;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-}
-
-/* Mobile first custom breakpoint for extremely small screens */
-@media (max-width: 360px) {
-  .menu-open {
-    position: fixed;
-    width: 100%;
-  }
-}
-
-/* Custom transition for dropdown icons */
-.transform {
-  transition: transform 0.2s ease-in-out;
-}
-.rotate-180 {
-  transform: rotate(180deg);
-}
-
-/* Thêm media queries cho responsive */
-@media (max-width: 639px) {
-  /* Styles cho màn hình cực nhỏ */
-  .text-base {
-    font-size: 0.95rem;
-  }
-}
-
-@media (min-width: 640px) and (max-width: 767px) {
-  /* Styles cho màn hình nhỏ */
-}
-
-@media (min-width: 768px) and (max-width: 1023px) {
-  /* Styles cho tablet */
-  .space-x-6 {
-    column-gap: 1rem;
-  }
-}
-
-@media (min-width: 1024px) and (max-width: 1279px) {
-  /* Styles cho desktop nhỏ */
-  .lg\:space-x-12 {
-    column-gap: 2.5rem;
-  }
-}
-
-@media (min-width: 1280px) {
-  /* Styles cho desktop lớn */
-  .lg\:px-15 {
-    padding-left: 3.75rem;
-    padding-right: 3.75rem;
-  }
-}
-
-.nav-link-hover {
+/* Active link styling */
+.router-link-active {
   position: relative;
-  display: inline-block;
-  overflow: hidden;
 }
 
-.nav-link-hover::after {
-  content: "";
-  position: absolute;
-  bottom: -0.5px;
-  left: 50%; /* Bắt đầu từ giữa */
-  width: 0; /* Độ rộng ban đầu = 0 */
-  height: 2px; /* Chiều cao border */
-  background-color: white;
-  transition: all 0.3s ease-in-out;
-  transform: translateX(-50%); /* Căn giữa */
-}
-
-.nav-link-hover:hover::after {
-  width: 100%;
-  /* Tràn ra toàn bộ chiều rộng */
-}
-
-/* Override màu logo trong header thành màu trắng */
-header .host {
-  color: #ffffff !important;
+/* Optional: Add underline effect for active nav links on desktop */
+@media (min-width: 768px) {
+  nav a.router-link-active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: currentColor;
+  }
 }
 </style>

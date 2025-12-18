@@ -53,58 +53,77 @@ const clearError = (field) => {
 </script>
 
 <template>
-  <div class="w-full max-w-md bg-white shadow-lg rounded-xl p-6">
-    <h2 class="text-2xl font-semibold text-center text-gray-700 mb-4">
-      Nhập mật khẩu mới
-    </h2>
-    <form @submit.prevent="handleChangePassword">
-      <div class="mb-4">
-        <label for="password" class="block text-sm font-medium text-gray-600"
-          >Mật khẩu mới</label
-        >
-        <input
-          id="password"
-          v-model="newPassword"
-          type="password"
-          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          placeholder="Nhập mật khẩu mới"
-          @input="clearError('newPassword')"
-        />
-        <p v-if="errors.newPassword" class="text-red-500 text-sm mt-1">
-          {{ errors.newPassword }}
+  <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center px-4 py-8">
+    <!-- New Password Card -->
+    <div 
+      class="w-full max-w-md"
+      data-aos="fade-up"
+      data-aos-duration="600"
+    >
+      <!-- Card Container -->
+      <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+        <!-- Header Section -->
+        <div class="bg-gradient-to-r from-blue-500 to-indigo-600 px-8 py-10 text-center">
+          <h1 class="text-2xl font-semibold text-white mb-2">Nhập mật khẩu mới</h1>
+          <p class="text-blue-50 text-sm">Tạo mật khẩu mới cho tài khoản của bạn</p>
+        </div>
+
+        <!-- Form Section -->
+        <div class="px-8 py-8">
+          <form @submit.prevent="handleChangePassword" class="space-y-5">
+            <!-- Password Input -->
+            <div data-aos="fade-right" data-aos-delay="300">
+              <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+                Mật khẩu mới
+              </label>
+              <input
+                v-model="newPassword"
+                type="password"
+                id="password"
+                required
+                @input="clearError('newPassword')"
+                placeholder="Nhập mật khẩu mới (6-15 ký tự)"
+                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 text-gray-800"
+              />
+              <p v-if="errors.newPassword" class="text-red-500 text-sm mt-1.5">
+                {{ errors.newPassword }}
+              </p>
+            </div>
+
+            <!-- General Error -->
+            <p
+              v-if="generalError"
+              class="text-red-500 text-sm text-center bg-red-50 py-2 px-4 rounded-lg"
+              data-aos="shake"
+            >
+              {{ generalError }}
+            </p>
+
+            <!-- Submit Button -->
+            <button
+              type="submit"
+              :disabled="loading"
+              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center shadow-lg"
+              data-aos="fade-up"
+              data-aos-delay="400"
+            >
+              <span v-if="loading" class="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
+              <span>{{ loading ? 'Đang xử lý...' : 'Xác nhận' }}</span>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="text-center mt-6" data-aos="fade-up" data-aos-delay="500">
+        <p class="text-sm text-gray-500">
+          &copy; 2025
+          <router-link to="/home" class="text-blue-600 hover:text-blue-700 font-medium">
+            28.Host Team
+          </router-link>
+          . All rights reserved.
         </p>
       </div>
-      <p v-if="generalError" class="text-red-500 text-sm text-center mb-4">
-        {{ generalError }}
-      </p>
-      <button
-        :disabled="loading"
-        type="submit"
-        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg flex justify-center items-center"
-      >
-        <svg
-          v-if="loading"
-          class="animate-spin h-5 w-5 mr-2 text-white"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <circle
-            class="opacity-25"
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            stroke-width="4"
-          ></circle>
-          <path
-            class="opacity-75"
-            fill="currentColor"
-            d="M4 12a8 8 0 018-8v8H4z"
-          ></path>
-        </svg>
-        Xác nhận
-      </button>
-    </form>
+    </div>
   </div>
 </template>

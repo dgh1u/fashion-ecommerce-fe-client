@@ -1,32 +1,28 @@
 <template>
-  <div class="min-h-screen flex">
-    <!-- Cột trái: Form đăng nhập -->
-    <div
-      class="w-full xl:w-1/2 flex flex-col items-center px-8 py-8 bg-white relative"
-      data-aos="fade-left"
-      data-aos-duration="800"
+  <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center px-4 py-8">
+    <!-- Login Card -->
+    <div 
+      class="w-full max-w-md"
+      data-aos="fade-up"
+      data-aos-duration="600"
     >
-      <div class="flex-grow flex flex-col items-center justify-center w-full">
-        <div class="max-w-lg w-full text-center md:text-left">
-          <!-- Tiêu đề và link đăng ký -->
-          <div class="mb-12">
-            <h1 class="text-3xl md:text-4xl font-bold mb-4">Đăng nhập</h1>
-            <p class="text-gray-600 text-base md:text-base">
-              Chưa có tài khoản?
-              <router-link to="/register" class="text-blue-500 hover:font-bold">
-                Đăng ký tại đây.
-              </router-link>
-            </p>
+      <!-- Card Container -->
+      <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+        <!-- Header Section with Logo -->
+        <div class="bg-gradient-to-r from-blue-500 to-indigo-600 px-8 py-10 text-center">
+          <div class="mb-4" data-aos="zoom-in" data-aos-delay="200">
+            <Logo />
           </div>
+          <h1 class="text-2xl font-semibold text-white mb-2">Chào mừng trở lại</h1>
+          <p class="text-blue-50 text-sm">Đăng nhập để tiếp tục mua sắm</p>
+        </div>
 
-          <!-- Form đăng nhập -->
-          <form @submit.prevent="handleLogin" class="space-y-7">
-            <!-- Trường nhập email -->
-            <div>
-              <label
-                for="email"
-                class="block text-gray-700 font-medium mb-2 text-sm md:text-base"
-              >
+        <!-- Form Section -->
+        <div class="px-8 py-8">
+          <form @submit.prevent="handleLogin" class="space-y-5">
+            <!-- Email Input -->
+            <div data-aos="fade-right" data-aos-delay="300">
+              <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
                 Email
               </label>
               <input
@@ -35,19 +31,17 @@
                 id="email"
                 required
                 @input="clearError('email')"
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200 focus:border-blue-400 focus:shadow-md focus:shadow-blue-200 outline-none transition duration-300 text-base"
+                placeholder="your@email.com"
+                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 text-gray-800"
               />
-              <p v-if="errors.email" class="text-red-500 text-base mt-1">
+              <p v-if="errors.email" class="text-red-500 text-sm mt-1.5">
                 {{ errors.email }}
               </p>
             </div>
 
-            <!-- Trường nhập mật khẩu -->
-            <div>
-              <label
-                for="password"
-                class="block text-gray-700 font-medium mb-2 text-sm md:text-base"
-              >
+            <!-- Password Input -->
+            <div data-aos="fade-right" data-aos-delay="400">
+              <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
                 Mật khẩu
               </label>
               <div class="relative">
@@ -57,106 +51,81 @@
                   id="password"
                   required
                   @input="clearError('password')"
-                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200 focus:border-blue-400 focus:shadow-md focus:shadow-blue-200 outline-none transition duration-300 text-base"
+                  placeholder="••••••••"
+                  class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 text-gray-800 pr-12"
                 />
-                <!-- Nút ẩn/hiện mật khẩu -->
                 <button
                   type="button"
-                  class="absolute inset-y-0 right-4 flex items-center"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                   @click="togglePasswordVisibility"
                 >
-                  <EyeOff v-if="showPassword" class="w-4 h-4" />
-                  <Eye v-else class="w-4 h-4" />
+                  <EyeOff v-if="showPassword" :size="20" />
+                  <Eye v-else :size="20" />
                 </button>
               </div>
-              <p v-if="errors.password" class="text-red-500 text-base mt-1">
+              <p v-if="errors.password" class="text-red-500 text-sm mt-1.5">
                 {{ errors.password }}
               </p>
             </div>
 
-            <!-- Hiển thị lỗi chung -->
-            <p
-              v-if="generalError"
-              class="text-red-500 text-center md:text-center text-base mb-4"
-            >
-              {{ generalError }}
-            </p>
-
-            <!-- Nút đăng nhập -->
-            <div>
-              <button
-                type="submit"
-                :disabled="loading"
-                class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg flex items-center justify-center disabled:opacity-75 disabled:cursor-not-allowed text-base"
-              >
-                <span v-if="loading" class="loader mr-2"></span>
-                Đăng nhập
-              </button>
-            </div>
-
-            <!-- Link quên mật khẩu -->
-            <div>
+            <!-- Forgot Password Link -->
+            <div class="text-right" data-aos="fade-left" data-aos-delay="500">
               <router-link
                 to="/forgot-password"
-                class="text-blue-500 text-base flex items-center justify-center hover:font-bold"
+                class="text-sm text-blue-600 hover:text-blue-700 hover:underline transition-colors"
               >
                 Quên mật khẩu?
               </router-link>
             </div>
+
+            <!-- General Error -->
+            <p
+              v-if="generalError"
+              class="text-red-500 text-sm text-center bg-red-50 py-2 px-4 rounded-lg"
+              data-aos="shake"
+            >
+              {{ generalError }}
+            </p>
+
+            <!-- Submit Button -->
+            <button
+              type="submit"
+              :disabled="loading"
+              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center shadow-lg"
+              data-aos="fade-up"
+              data-aos-delay="600"
+            >
+              <span v-if="loading" class="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
+              <span>{{ loading ? 'Đang đăng nhập...' : 'Đăng nhập' }}</span>
+            </button>
           </form>
+
+          <!-- Register Link -->
+          <div class="mt-6 text-center" data-aos="fade-up" data-aos-delay="700">
+            <p class="text-sm text-gray-600">
+              Chưa có tài khoản?
+              <router-link
+                to="/register"
+                class="text-blue-600 font-medium hover:underline ml-1"
+              >
+                Đăng ký ngay
+              </router-link>
+            </p>
+          </div>
         </div>
       </div>
 
       <!-- Footer -->
-      <div class="text-sm text-gray-500 text-center">
-        &copy; Toàn bộ bản quyền thuộc
-        <router-link to="/home" class="text-blue-500 text-sm hover:font-bold">
-          28.Host Team
-        </router-link>
+      <div class="text-center mt-6" data-aos="fade-up" data-aos-delay="800">
+        <p class="text-sm text-gray-500">
+          &copy; 2025
+          <router-link to="/home" class="text-blue-600 hover:text-blue-700 font-medium">
+            28.Host Team
+          </router-link>
+          . All rights reserved.
+        </p>
       </div>
     </div>
-
-    <!-- Cột phải: Nền VNUA với thông tin trường -->
-    <div
-      class="hidden xl:flex w-1/2 bg-gradient-to-br from-stone-400 to-sky-300 items-center justify-center"
-    >
-      <div class="text-center text-white px-8">
-        <!-- Tên trường -->
-        <h2 class="text-xl font-bold">HỌC VIỆN NÔNG NGHIỆP VIỆT NAM</h2>
-        <h3 class="text-2xl font-semibold">KHOA CÔNG NGHỆ THÔNG TIN</h3>
-        <!-- Logo -->
-        <div class="flex items-center justify-center mb-2">
-          <img
-            src="@/assets/marquee-items/vnua-logo.png"
-            alt="VNUA Logo"
-            class="w-22 h-22 object-contain"
-          />
-       
-        </div>
-
-        <!-- Tên dịch vụ -->
-        <div class="mb-6">
-          <h4 class="text-3xl font-bold mb-4">28.Host</h4>
-          <p class="text-xl">
-            Website bán quần áo
-          </p>
-        </div>
-
-        <!-- Thông tin đội ngũ -->
-        <div class="text-lg">
-          <p>28.Host Development Team</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Nút liên hệ Zalo -->
-    <a
-      href="https://zalo.me/0981266403"
-      target="_blank"
-      class="fixed bottom-4 right-4 z-50"
-    >
-      <img src="@/assets/zalo-icon.svg" alt="Zalo contact" class="w-15 h-15" />
-    </a>
   </div>
 </template>
 
@@ -165,6 +134,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../../stores/store";
 import { Eye, EyeOff } from "lucide-vue-next";
+import Logo from "../../components/logo/Logo.vue";
 
 // Khai báo các biến reactive
 const email = ref("");

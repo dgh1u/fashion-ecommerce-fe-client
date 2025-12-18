@@ -72,7 +72,7 @@
      
     
       <router-link
-        to="/order-history"
+        to="/orders"
         class="flex items-center block py-1.5 md:py-2 px-4 md:px-10 rounded hover:text-stone-500 font-medium text-gray-700 text-xs md:text-sm lg:text-base"
         active-class="bg-stone-400 text-white"
       >

@@ -481,24 +481,39 @@
         </span>
       </div>
 
-      <!-- Comments section - moved outside the columns -->
-      <div class="w-full bg-white px-4 pb-4">
-        <Comment v-if="product && product.id" :productId="product.id" />
+      <!-- Sản phẩm liên quan cùng loại hình -->
+      <div v-if="relatedProducts.length > 0" class="w-full bg-white p-8">
+        <div class="border-b-2 border-blue-500 inline-block mb-6">
+          <span class="text-lg font-semibold">Sản phẩm liên quan</span>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          <router-link
+            v-for="relatedProduct in relatedProducts"
+            :key="relatedProduct.id"
+            :to="`/product/clothing/${relatedProduct.id}`"
+            class="block"
+          >
+            <ClothingCard :product="relatedProduct" />
+          </router-link>
+        </div>
       </div>
+
+      
     </div>
   </DefaultLayout>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import DefaultLayout from "../../../layouts/DefaultLayout.vue";
 import Comment from "../../../components/comment/Comment.vue";
 import Color, { colorSets } from "@/components/color/Color.vue";
 import ProductImageGallery from "@/components/ProductImageGallery.vue";
-import { getDetailProduct, hideProduct } from "@/apis/productService.js";
+import { getDetailProduct, hideProduct, getListProduct } from "@/apis/productService.js";
 import { getImageByProduct } from "@/apis/imageService.js";
 import { useAuthStore } from "@/stores/store";
+import ClothingCard from "@/components/card/ClothingCard.vue";
 
 import { getProfile } from "@/apis/authService.js";
 import { message } from "ant-design-vue";
@@ -531,6 +546,7 @@ const cartStore = useCartStore();
 const product = ref(null);
 const errorMsg = ref("");
 const currentUser = ref(null);
+const relatedProducts = ref([]);
 
 // Image gallery management
 const imageUrls = ref([]);
@@ -941,12 +957,77 @@ const buyNow = async () => {
   }
 };
 
+// Lấy sản phẩm liên quan cùng loại hình
+async function fetchRelatedProducts() {
+  if (!product.value) return;
+  
+  try {
+    // Xác định loại hình dựa trên route path
+    let firstClass = 'QUAN_AO'; // Mặc định
+    const path = route.path;
+    
+    if (path.includes('/accessories')) {
+      firstClass = 'PHU_KIEN';
+    } else if (path.includes('/bags')) {
+      firstClass = 'TUI_XACH';
+    }
+    
+    // Gọi API lấy danh sách sản phẩm cùng loại hình
+    const response = await getListProduct({
+      firstClass: firstClass,
+      del: false,
+      start: 0,
+      limit: 20, // Lấy 20 sản phẩm để có đủ để chọn ngẫu nhiên
+      sortField: 'id',
+      sortType: 'DESC'
+    });
+    
+    if (response.data && response.data.items) {
+      // Lọc bỏ sản phẩm hiện tại
+      const filteredProducts = response.data.items.filter(
+        p => p.id !== product.value.id
+      );
+      
+      // Chọn ngẫu nhiên 4 sản phẩm
+      const shuffled = filteredProducts.sort(() => 0.5 - Math.random());
+      relatedProducts.value = shuffled.slice(0, 4);
+    }
+  } catch (error) {
+    console.error('Error fetching related products:', error);
+    relatedProducts.value = [];
+  }
+}
+
 onMounted(() => {
   fetchProduct();
 
   const authStore = useAuthStore();
   if (authStore.isAuthenticated && authStore.token?.trim() !== "") {
     fetchProfile();
+  }
+});
+
+// Watch route.params.id để reload dữ liệu khi chuyển sản phẩm
+watch(() => route.params.id, (newId, oldId) => {
+  if (newId && newId !== oldId) {
+    // Reset states
+    currentImageIndex.value = 0;
+    selectedSize.value = null;
+    quantity.value = 1;
+    relatedProducts.value = [];
+    
+    // Fetch lại dữ liệu
+    fetchProduct();
+    
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+});
+
+// Watch product để lấy sản phẩm liên quan khi sản phẩm được load
+watch(product, (newProduct) => {
+  if (newProduct) {
+    fetchRelatedProducts();
   }
 });
 </script>

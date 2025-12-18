@@ -1,6 +1,7 @@
 <template>
-  <div class="min-h-screen bg-gray-50 py-8">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+  <ProfileLayout>
+  
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Header -->
       <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
         <div class="flex items-center justify-between">
@@ -25,15 +26,7 @@
               <a-select-option value="completed">Hoàn thành</a-select-option>
               <a-select-option value="cancelled">Đã hủy</a-select-option>
             </a-select>
-            <a-button 
-              @click="refreshOrders" 
-              :loading="loading"
-              type="primary"
-              class="flex items-center"
-            >
-              <RefreshCw class="mr-2 h-4 w-4" />
-              Làm mới
-            </a-button>
+           
           </div>
         </div>
       </div>
@@ -253,12 +246,14 @@
         </div>
       </div>
     </a-modal>
-  </div>
+    
+  </ProfileLayout>
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import { message, Modal } from 'ant-design-vue';
+import ProfileLayout from '@/layouts/ProfileLayout.vue';
 import { 
   ShoppingBag, 
   RefreshCw, 
@@ -329,7 +324,7 @@ const detailColumns = [
 const fetchOrders = async () => {
   loading.value = true;
   try {
-    const response = await orderService.getMyOrders(currentPage.value, pageSize.value);
+    const response = await orderService.getMyOrders(currentPage.value, pageSize.value, statusFilter.value);
     if (response.success) {
       orders.value = response.data.items;
       totalOrders.value = response.data.total;
@@ -380,9 +375,6 @@ const handlePageChange = (page) => {
 const handleStatusChange = (status) => {
   statusFilter.value = status;
   currentPage.value = 1;
-  // TODO: For now, we'll just set the filter value. 
-  // In a real implementation, you might want to implement client-side filtering
-  // or modify the API call to include the status parameter
   fetchOrders();
 };
 

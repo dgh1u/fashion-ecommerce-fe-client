@@ -120,7 +120,8 @@ export const useCartStore = defineStore(
     const addToCart = async (productId, sizeId, quantity = 1) => {
       try {
         const response = await cartService.addToCart(productId, sizeId, quantity);
-        cart.value = response;
+        // Fetch lại cart để cập nhật số lượng sản phẩm
+        await fetchCart();
         return response;
       } catch (error) {
         console.error('Error adding to cart:', error);

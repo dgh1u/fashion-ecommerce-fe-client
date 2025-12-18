@@ -2,6 +2,7 @@
   <div class="cart-icon" @click="goToCart">
     <ShoppingBasket :size="25" />
     <span v-if="cartItemCount > 0" class="cart-badge">{{ cartItemCount }}</span>
+    <span class="cart-label">Giỏ hàng</span>
   </div>
 </template>
 
@@ -39,21 +40,29 @@ onMounted(() => {
   position: relative;
   cursor: pointer;
   padding: 10px;
-  color: white;
+  color: #1f2937;
   transition: color 0.3s ease;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 4px;
 }
 
 .cart-icon:hover {
   color: #007bff;
 }
 
+.cart-label {
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
 .cart-badge {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 5px;
+  right: 5px;
   background-color: #dc3545;
   color: white;
   border-radius: 50%;

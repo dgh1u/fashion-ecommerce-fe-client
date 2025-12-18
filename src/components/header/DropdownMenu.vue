@@ -2,18 +2,19 @@
   <div class="relative" @mouseenter="showMenu" @mouseleave="hideMenu">
     <!-- Desktop Dropdown Trigger Button -->
     <div
-      class="hidden md:flex items-center px-5 py-2 rounded-lg cursor-pointer"
+      class="hidden md:flex flex-col items-center px-5 py-2 rounded-lg cursor-pointer"
       data-aos="zoom-out"
       data-aos-duration="800"
     >
-      <div class="w-10 h-10 relative ml-4">
+      <div class="w-7 h-7 relative">
         <img
           v-if="avatarUrl"
           :src="avatarUrl"
           alt="User Avatar"
-          class="w-10 h-10 rounded-full object-cover"
+          class="w-7 h-7 rounded-full object-cover"
         />
       </div>
+      <span class="text-xs font-medium mt-1 text-gray-700">Tài khoản</span>
     </div>
 
     <!-- Mobile Menu -->
