@@ -636,6 +636,12 @@ async function fetchProduct() {
   const id = route.params.id;
   try {
     const { data: result } = await getDetailProduct(id);
+    
+    // 🔍 DEBUG: Kiểm tra dữ liệu trả về
+    console.log('📦 Product data:', result);
+    console.log('📏 Inventories:', result.inventories);
+    console.log('📏 Inventories length:', result.inventories?.length);
+    
     product.value = result;
     await loadGalleryImages(result.id);
     clothings.value = result.clothings || [];
@@ -651,6 +657,8 @@ async function fetchProduct() {
           firstAvailableInventory.quantity
         );
       }
+    } else {
+      console.warn('⚠️ Không có dữ liệu inventories!');
     }
   } catch (error) {
     errorMsg.value = "Có lỗi khi tải bài đăng";
